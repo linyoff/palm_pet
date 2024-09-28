@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">PalmPet</string>
+    <string name="title_activity_tela_login">TelaLogin</string>
+    <string name="title_activity_tela_cadastro_pet">TelaCadastroPet</string>
+    <string name="title_activity_tela_principal">TelaPrincipal</string>
+    <string name="title_activity_tela_pet">TelaPet</string>
+    <string name="title_activity_dados_usuario">DadosUsuario</string>
+    <string name="title_activity_main">MainActivity</string>
+</resources>

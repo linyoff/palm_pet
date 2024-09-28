@@ -1,0 +1,229 @@
+package com.aliny.palmpet.ui.screens
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.rememberImagePainter
+import com.aliny.palmpet.R
+import com.aliny.palmpet.ui.components.ActionButton
+import com.aliny.palmpet.ui.theme.AzulFontes
+import com.aliny.palmpet.ui.theme.CianoBotoes
+import com.aliny.palmpet.ui.theme.CinzaContainersClaro
+import com.aliny.palmpet.ui.theme.CinzaContainersEscuro
+import com.aliny.palmpet.ui.theme.PalmPetTheme
+import com.aliny.palmpet.ui.theme.RosaPrincipal
+import com.aliny.palmpet.viewmodel.PetViewModel
+import java.text.SimpleDateFormat
+import java.util.Locale
+
+class TelaPet : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContent {
+            PalmPetTheme {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = Color.White
+                ){
+                    TelaDoPet()
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun TelaDoPet(petViewModel: PetViewModel = viewModel()) {
+
+    val petId = (LocalContext.current as ComponentActivity).intent.getStringExtra("pet_id")
+    val pet by petViewModel.pet.observeAsState()
+
+    //verifica se o petId é válido e se o pet já foi carregado
+    LaunchedEffect(petId) {
+        petId?.let {
+            petViewModel.loadPetById(it)
+        }
+    }
+
+    Column (
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+    ){
+        BotoesDeAcaoPet()
+        Column(
+            modifier = Modifier
+                .padding(bottom = 30.dp)
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(200.dp)
+                    .clip(CircleShape)
+                    .background(CinzaContainersClaro, shape = RoundedCornerShape(21.dp)),
+                contentAlignment = Alignment.Center
+            ) {
+                pet?.let {
+                    if (!it.imageUrl.isNullOrEmpty()) {
+                        val painter: Painter = rememberImagePainter(data = it.imageUrl)
+                        Image(
+                            painter = painter,
+                            contentDescription = "Foto do pet",
+                            modifier = Modifier
+                                .size(190.dp)
+                                .clip(CircleShape)
+                        )
+                    } else {
+                        Text(
+                            text = it.nome.take(1), //incial do nome do pet
+                            fontSize = 48.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White
+                        )
+                    }
+                }
+            }
+        }
+        Text(
+            text = "Informações do Pet:",
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier
+                .padding(horizontal = 22.dp),
+            color = AzulFontes
+        )
+        //informações do pet
+        pet?.let { petInfo ->
+            InfoCard(label = "Nome", value = petInfo.nome)
+
+            //formatando a data de nascimento
+            val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            val dataNascimentoStr = dateFormat.format(petInfo.data_nascimento.toDate())
+            InfoCard(label = "Data de nascimento", value = dataNascimentoStr)
+            InfoCard(label = "Sexo", value = petInfo.sexo)
+            val castradoStr = if (petInfo.castrado) "Sim" else "Não"
+            InfoCard(label = "Castrado", value = castradoStr)
+            InfoCard(label = "Espécie", value = petInfo.especie)
+            InfoCard(label = "Raça", value = petInfo.raca)
+            InfoCard(label = "Peso", value = petInfo.peso.toString() + " kg")
+            InfoCard(label = "Cor", value = petInfo.cor)
+            InfoCard(label = "Tamanho de pelagem", value = petInfo.tipo_pelagem)
+            InfoCard(label = "Já cruzou", value = if (petInfo.ja_cruzou == true) "Sim" else "Não")
+            InfoCard(label = "Teve filhotes", value = if (petInfo.teve_filhote == true) "Sim" else "Não")
+
+            //verifica se a data do cio está disponível
+            val dataCioStr = petInfo.data_cio?.let { dateFormat.format(it.toDate()) } ?: "N/A"
+            InfoCard(label = "Última data do cio", value = dataCioStr)
+
+            InfoCard(label = "Guarda compartilhada", value = petInfo.id_tutor2 ?: "N/A")
+        } ?: run {
+            Text(
+                text = "Carregando informações do pet...",
+                fontSize = 18.sp,
+                modifier = Modifier.padding(19.dp),
+                color = AzulFontes
+            )
+        }
+    }
+}
+
+@Composable
+fun InfoCard(label: String, value: String) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 7.dp, horizontal = 28.dp)
+            .background(CinzaContainersClaro, RoundedCornerShape(12.dp))
+            .padding(11.dp)
+    ) {
+        Column {
+            Text(
+                text = label,
+                fontSize = 16.sp,
+                color = Color.Gray,
+                fontWeight = FontWeight.Light
+            )
+            Text(
+                text = value,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                color = AzulFontes
+            )
+        }
+    }
+}
+
+@Composable
+fun BotoesDeAcaoPet() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 125.dp, bottom = 30.dp),
+        horizontalArrangement = Arrangement.Center
+    ) {
+        ActionButton(
+            text = "Medicações e vacinas",
+            backgroundColor = CianoBotoes,
+            iconResId = R.drawable.icon_medicacoes,
+            modifier = Modifier
+                .size(110.dp)
+        )
+        Spacer(modifier = Modifier.width(11.dp))
+        ActionButton(
+            text = "Histórico",
+            backgroundColor = RosaPrincipal,
+            iconResId = R.drawable.icon_exame,
+            modifier = Modifier
+                .size(110.dp)
+        )
+        Spacer(modifier = Modifier.width(11.dp))
+        ActionButton(
+            text = "Agendar consulta",
+            backgroundColor = CianoBotoes,
+            iconResId = R.drawable.icon_consulta,
+            modifier = Modifier
+                .size(110.dp)
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun TelaDoPetPreview() {
+    PalmPetTheme {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
+        ){
+            TelaDoPet()
+        }
+    }
+}

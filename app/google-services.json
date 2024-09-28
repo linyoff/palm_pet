@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1024561691847",
+    "project_id": "palmpet-1a8c3",
+    "storage_bucket": "palmpet-1a8c3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1024561691847:android:1d0c5ac1dd4b6b92f712e2",
+        "android_client_info": {
+          "package_name": "com.aliny.palmpet"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQqVZ_Tap9ihEDvkLV_yzYH3K8S5vB4M8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

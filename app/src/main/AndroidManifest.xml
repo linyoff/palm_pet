@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Permissões necessárias -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.PalmPet"
+        tools:targetApi="31">
+
+        <!-- Configuração do FileProvider -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <!-- Telas -->
+        <activity
+            android:name=".ui.screens.Login"
+            android:exported="false"
+            android:label="@string/title_activity_main"
+            android:theme="@style/Theme.PalmPet" />
+        <activity
+            android:name=".ui.screens.EditProfile"
+            android:exported="false"
+            android:label="@string/title_activity_dados_usuario"
+            android:theme="@style/Theme.PalmPet" />
+        <activity
+            android:name=".ui.screens.TelaPet"
+            android:exported="false"
+            android:label="@string/title_activity_tela_pet"
+            android:theme="@style/Theme.PalmPet" />
+        <activity
+            android:name=".ui.screens.TelaCadastroPet"
+            android:exported="false"
+            android:label="@string/title_activity_tela_cadastro_pet"
+            android:theme="@style/Theme.PalmPet" />
+        <activity
+            android:name=".ui.screens.TelaCadastro"
+            android:exported="false"
+            android:label="@string/title_activity_tela_login"
+            android:theme="@style/Theme.PalmPet" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.PalmPet">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
