@@ -18,8 +18,6 @@ import java.util.UUID
 object PetRepository {
 
     val db = Firebase.firestore
-    //alterar
-    var cachedPets: List<Pet>? = null
     val storage = Firebase.storage
 
     fun addPet(
@@ -91,7 +89,6 @@ object PetRepository {
                                     .addOnSuccessListener {
                                         Log.i("TESTE", "Novo pet adicionado com sucesso!")
                                         Toast.makeText(context, "Pet adicionado com sucesso!", Toast.LENGTH_SHORT).show()
-                                        updateCachedPets(userData)
                                     }
                                     .addOnFailureListener { e ->
                                         Log.e("TESTE", "Erro ao adicionar novo pet", e)
@@ -128,7 +125,6 @@ object PetRepository {
                         .addOnSuccessListener {
                             Log.i("TESTE", "Novo pet adicionado com sucesso!")
                             Toast.makeText(context, "Pet adicionado com sucesso!", Toast.LENGTH_SHORT).show()
-                            updateCachedPets(userData)
                         }
                         .addOnFailureListener { e ->
                             Log.e("TESTE", "Erro ao adicionar novo pet", e)
@@ -169,10 +165,7 @@ object PetRepository {
         onFailure: (Exception) -> Unit
     ) {
         val userId = userData.id_usuario
-        if (cachedPets != null) {
-            onSuccess(cachedPets!!)
-            return
-        }
+
 
         db.collection("pets")
             .whereEqualTo("id_tutor1", userId)
@@ -181,7 +174,6 @@ object PetRepository {
                 val pets = result.documents.mapNotNull { document ->
                     document.toObject(Pet::class.java)
                 }
-                cachedPets = pets
                 onSuccess(pets)
             }
             .addOnFailureListener { e ->
@@ -190,8 +182,4 @@ object PetRepository {
             }
     }
 
-    //alterar
-    private fun updateCachedPets(userData: Usuario) {
-        getPetsForLoggedUser(userData, {}, {})
-    }
 }
