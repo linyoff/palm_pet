@@ -46,9 +46,9 @@ fun CustomDatePicker(
 
     Column(
         modifier = modifier
-            .height(55.dp)
+            .height(70.dp)
             .fillMaxWidth(0.78f)
-            .padding(vertical = 3.dp)
+            .padding(top = 3.dp)
     ) {
         Text(
             //preenche com o texto do label ou com a data selecionada
@@ -57,7 +57,7 @@ fun CustomDatePicker(
             modifier = modifier
                 .background(CinzaContainersClaro, RoundedCornerShape(15.dp))
                 .clickable { datePickerDialog.show() }
-                .padding(15.dp)
+                .padding(18.dp)
                 .fillMaxWidth()
         )
     }

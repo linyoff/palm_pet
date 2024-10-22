@@ -1,9 +1,12 @@
 package com.aliny.palmpet.ui.screens
 
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -20,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
@@ -30,7 +34,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberImagePainter
 import com.aliny.palmpet.data.repository.UserRepository
 import com.aliny.palmpet.ui.components.CustomButton
-import com.aliny.palmpet.ui.components.CustomTextField
+import com.aliny.palmpet.ui.components.CustomOutlinedTextField
 import com.aliny.palmpet.ui.theme.AzulFontes
 import com.aliny.palmpet.ui.theme.CinzaContainersClaro
 import com.aliny.palmpet.ui.theme.PalmPetTheme
@@ -58,17 +62,22 @@ class EditProfile : ComponentActivity() {
 
 @Composable
 fun EditProfile(userViewModel: UserViewModel = viewModel()) {
-    // Observa os dados do usuário
+    //dados do usuário
     val userData by userViewModel.userData.observeAsState()
 
-    // Controladores de estado para os campos de entrada com TextFieldValue para preservar o cursor
+    val context = LocalContext.current
+
+    //controladores de estado para os campos de entrada
     var nome by remember { mutableStateOf(TextFieldValue("")) }
     var nomeUsuario by remember { mutableStateOf(TextFieldValue("")) }
     var dataNascimento by remember { mutableStateOf(TextFieldValue("")) }
     var telefone by remember { mutableStateOf(TextFieldValue("")) }
     var email by remember { mutableStateOf(TextFieldValue("")) }
 
-    // Atualiza os campos de entrada quando userData mudar
+    //estado para a URI da nova imagem selecionada
+    var imageUri by remember { mutableStateOf<Uri?>(null) }
+
+    //atualiza os campos de entrada quando userData mudar
     LaunchedEffect(userData) {
         userData?.let { user ->
             nome = TextFieldValue(user.nome ?: "")
@@ -80,6 +89,16 @@ fun EditProfile(userViewModel: UserViewModel = viewModel()) {
             )
             telefone = TextFieldValue(user.telefone ?: "")
             email = TextFieldValue(user.email ?: "")
+        }
+    }
+
+    //lançador para selecionar a imagem
+    val imagePickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        // Atualiza a URI da imagem ao selecionar uma nova
+        if (uri != null) {
+            imageUri = uri
         }
     }
 
@@ -105,26 +124,31 @@ fun EditProfile(userViewModel: UserViewModel = viewModel()) {
                     .background(CinzaContainersClaro, shape = MaterialTheme.shapes.medium),
                 contentAlignment = Alignment.Center
             ) {
-                userData?.let { user ->
-                    if (!user.imageUrl.isNullOrEmpty()) {
-                        // Imagem do usuário
-                        val painter = rememberImagePainter(data = user.imageUrl)
-                        Image(
-                            painter = painter,
-                            contentDescription = "Foto do usuário",
-                            modifier = Modifier
-                                .size(190.dp)
-                                .clip(CircleShape)
-                        )
-                    }
+                // Exibe a nova imagem selecionada, se houver
+                val painter = if (imageUri != null) {
+                    rememberImagePainter(data = imageUri)
+                } else {
+                    // Exibe a imagem anterior do usuário
+                    rememberImagePainter(data = userData?.imageUrl)
                 }
+
+                Image(
+                    painter = painter,
+                    contentDescription = "Foto do usuário",
+                    modifier = Modifier
+                        .size(190.dp)
+                        .clip(CircleShape)
+                )
 
                 Icon(
                     imageVector = Icons.Outlined.Edit,
                     contentDescription = "Selecionar Foto",
                     modifier = Modifier
                         .size(60.dp)
-                        .clickable { }
+                        .clickable {
+                            // Abre o seletor de imagem ao clicar no ícone
+                            imagePickerLauncher.launch("image/*")
+                        }
                         .align(Alignment.Center),
                     tint = Color.White
                 )
@@ -140,8 +164,7 @@ fun EditProfile(userViewModel: UserViewModel = viewModel()) {
             color = AzulFontes
         )
 
-        // Campos customizados usando CustomTextField
-        CustomTextField(
+        CustomOutlinedTextField(
             value = nome,
             onValueChange = { nome = it },
             placeholderText = "Nome completo",
@@ -149,7 +172,7 @@ fun EditProfile(userViewModel: UserViewModel = viewModel()) {
             keyboardType = KeyboardType.Text
         )
 
-        CustomTextField(
+        CustomOutlinedTextField(
             value = nomeUsuario,
             onValueChange = { nomeUsuario = it },
             placeholderText = "Nome de usuário",
@@ -157,7 +180,7 @@ fun EditProfile(userViewModel: UserViewModel = viewModel()) {
             keyboardType = KeyboardType.Text
         )
 
-        CustomTextField(
+        CustomOutlinedTextField(
             value = dataNascimento,
             onValueChange = { dataNascimento = it },
             placeholderText = "Data de nascimento",
@@ -165,7 +188,7 @@ fun EditProfile(userViewModel: UserViewModel = viewModel()) {
             keyboardType = KeyboardType.Text
         )
 
-        CustomTextField(
+        CustomOutlinedTextField(
             value = telefone,
             onValueChange = { telefone = it },
             placeholderText = "Telefone",
@@ -173,17 +196,19 @@ fun EditProfile(userViewModel: UserViewModel = viewModel()) {
             keyboardType = KeyboardType.Phone
         )
 
-        CustomTextField(
-            value = email,
-            onValueChange = { email = it },
-            placeholderText = "Email",
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            keyboardType = KeyboardType.Email
-        )
-
         CustomButton(
             onClickAction = {
-
+                userData?.let {
+                    UserRepository.updateUser(
+                        uid_user = it.id_usuario,
+                        nome_usuario = nomeUsuario.text,
+                        nome = nome.text,
+                        dataNascimento = dataNascimento.text,
+                        telefone = telefone.text,
+                        imageUri = imageUri, //parâmetro para a URI da imagem
+                        context = context
+                    )
+                }
             },
             modifier = Modifier
                 .align(Alignment.CenterHorizontally),

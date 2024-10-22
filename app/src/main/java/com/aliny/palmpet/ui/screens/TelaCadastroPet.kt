@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -42,13 +43,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.compose.ui.layout.ContentScale
-import coil.compose.rememberAsyncImagePainter
 import com.aliny.palmpet.R
 import com.aliny.palmpet.data.repository.PetRepository
 import com.aliny.palmpet.ui.components.CustomButton
 import com.aliny.palmpet.ui.components.CustomDatePicker
-import com.aliny.palmpet.ui.components.CustomTextField
+import com.aliny.palmpet.ui.components.CustomOutlinedTextField
 import com.aliny.palmpet.ui.components.ImagePicker
 import com.aliny.palmpet.ui.theme.CinzaContainersClaro
 import com.aliny.palmpet.ui.theme.PalmPetTheme
@@ -124,7 +123,7 @@ fun TeladeCadastroPet(userViewModel: UserViewModel) {
             fontSize = 22.sp,
             color = RosaPrincipal
         )
-        CustomTextField(
+        CustomOutlinedTextField(
             value = nomeState,
             onValueChange = { nomeState = it },
             placeholderText = "Nome",
@@ -144,9 +143,8 @@ fun TeladeCadastroPet(userViewModel: UserViewModel) {
         //código para a seleção de espécie
         Column(
             modifier = Modifier
-                .height(54.dp)
+                .height(52.dp)
                 .fillMaxWidth(0.78f)
-                .padding(vertical = 3.dp)
                 .align(Alignment.CenterHorizontally)
                 .background(CinzaContainersClaro, RoundedCornerShape(17.dp))
         ){
@@ -176,7 +174,7 @@ fun TeladeCadastroPet(userViewModel: UserViewModel) {
             }
         }
 
-        CustomTextField(
+        CustomOutlinedTextField(
             value = racaState,
             onValueChange = { racaState = it },
             placeholderText = "Raça",
@@ -188,7 +186,7 @@ fun TeladeCadastroPet(userViewModel: UserViewModel) {
         //selecionando se animal é castrado
         Column(
             modifier = Modifier
-                .height(54.dp)
+                .height(60.dp)
                 .fillMaxWidth(0.78f)
                 .padding(vertical = 3.dp)
                 .align(Alignment.CenterHorizontally)
@@ -213,7 +211,7 @@ fun TeladeCadastroPet(userViewModel: UserViewModel) {
         //selecionando sexo do animal
         Column(
             modifier = Modifier
-                .height(54.dp)
+                .height(60.dp)
                 .fillMaxWidth(0.78f)
                 .padding(vertical = 3.dp)
                 .align(Alignment.CenterHorizontally)
@@ -250,7 +248,7 @@ fun TeladeCadastroPet(userViewModel: UserViewModel) {
 
             Column(
                 modifier = Modifier
-                    .height(54.dp)
+                    .height(60.dp)
                     .fillMaxWidth(0.78f)
                     .padding(vertical = 3.dp)
                     .align(Alignment.CenterHorizontally)
@@ -275,7 +273,7 @@ fun TeladeCadastroPet(userViewModel: UserViewModel) {
             if(jaCruzouState.value){
                 Column(
                     modifier = Modifier
-                        .height(54.dp)
+                        .height(60.dp)
                         .fillMaxWidth(0.78f)
                         .padding(vertical = 3.dp)
                         .align(Alignment.CenterHorizontally)
@@ -309,7 +307,7 @@ fun TeladeCadastroPet(userViewModel: UserViewModel) {
             }
         }
 
-        CustomTextField(
+        CustomOutlinedTextField(
             value = pesoState,
             onValueChange = { pesoState = it },
             placeholderText = "Peso",
@@ -318,7 +316,7 @@ fun TeladeCadastroPet(userViewModel: UserViewModel) {
             keyboardType = KeyboardType.Number
         )
 
-        CustomTextField(
+        CustomOutlinedTextField(
             value = corState,
             onValueChange = { corState = it },
             placeholderText = "Cor",
@@ -330,7 +328,7 @@ fun TeladeCadastroPet(userViewModel: UserViewModel) {
         //inserir tamanha de pelagem do animal
         Column(
             modifier = Modifier
-                .height(54.dp)
+                .height(60.dp)
                 .fillMaxWidth(0.78f)
                 .padding(vertical = 3.dp)
                 .align(Alignment.CenterHorizontally)
@@ -342,7 +340,7 @@ fun TeladeCadastroPet(userViewModel: UserViewModel) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable { estadoExpanded3 = !estadoExpanded3 }
-                    .padding(15.dp)
+                    .padding(18.dp)
             )
             DropdownMenu(
                 expanded = estadoExpanded3,
@@ -396,7 +394,14 @@ fun TeladeCadastroPet(userViewModel: UserViewModel) {
                         teve_filhote = teveFilhoteState.value,
                         dataCioString = dataCioState,
                         imageUri = selectedImageUri,
-                        context = context
+                        context = context,
+                        onSuccess = {
+                            //alterar para fazer o retorno/contrato de destruição
+                            (context as? ComponentActivity)?.finish()
+                        },
+                        onFailure = {
+
+                        }
                     )
                 }
             },

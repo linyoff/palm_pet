@@ -41,9 +41,5 @@ class PetViewModel : ViewModel() {
         })
     }
 
-    fun clearPets() {
-        _pets.value = emptyList()  //limpa a lista de pets
-    }
-
 }
 

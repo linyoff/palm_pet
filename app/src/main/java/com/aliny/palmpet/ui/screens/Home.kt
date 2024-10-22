@@ -50,7 +50,7 @@ fun Home(userViewModel: UserViewModel = viewModel(), petViewModel: PetViewModel 
     val error by petViewModel.error.observeAsState()
 
     userData?.let {
-        // busca os pets quando o usuário estiver logado
+        //busca os pets quando o usuário estiver logado
         petViewModel.loadPets(it)
     }
 

@@ -1,15 +1,16 @@
 package com.aliny.palmpet.ui.components
 
-import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
@@ -18,13 +19,11 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.aliny.palmpet.ui.theme.AzulFontes
 import com.aliny.palmpet.ui.theme.CinzaContainersClaro
-import com.aliny.palmpet.ui.theme.CinzaContainersEscuro
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CustomTextField(
+fun CustomOutlinedTextField(
     value: TextFieldValue,
     onValueChange: (TextFieldValue) -> Unit,
     placeholderText: String,
@@ -35,9 +34,15 @@ fun CustomTextField(
     onImeAction: () -> Unit = {}
 ) {
 
-    TextField(
+    OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
+        label = { // Adicionando o label
+            Text(
+                text = placeholderText,
+                fontSize = 14.sp
+            )
+        },
         placeholder = {
             Text(
                 text = placeholderText,
@@ -46,16 +51,10 @@ fun CustomTextField(
         },
         modifier = modifier
             .fillMaxWidth(0.80f)
-            .padding(3.dp)
-            .height(53.dp),
+            .padding(3.dp),
         shape = RoundedCornerShape(17.dp),
         colors = TextFieldDefaults.textFieldColors(
-            containerColor = CinzaContainersClaro,
-            disabledIndicatorColor = Color.Transparent,
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-            focusedTextColor = Color.Black,
-            unfocusedTextColor = Color.Black
+            containerColor = CinzaContainersClaro
         ),
         visualTransformation = visualTransformation,
         keyboardOptions = KeyboardOptions.Default.copy(

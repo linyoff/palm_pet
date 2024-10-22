@@ -48,17 +48,14 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.rememberAsyncImagePainter
-import coil.compose.rememberImagePainter
 import com.aliny.palmpet.R
 import com.aliny.palmpet.data.repository.UserRepository
 import com.aliny.palmpet.ui.components.CustomButton
-import com.aliny.palmpet.ui.components.CustomTextField
 import com.aliny.palmpet.ui.theme.PalmPetTheme
 import com.aliny.palmpet.ui.theme.RosaPrincipal
 import com.aliny.palmpet.ui.components.CustomDatePicker
+import com.aliny.palmpet.ui.components.CustomOutlinedTextField
 import com.aliny.palmpet.ui.components.ImagePicker
-import com.aliny.palmpet.util.ValidationUtils
 
 
 class TelaCadastro : ComponentActivity() {
@@ -116,7 +113,7 @@ fun TeladeCadastro() {
             fontSize = 22.sp,
             color = RosaPrincipal
         )
-        CustomTextField(
+        CustomOutlinedTextField(
             value = nomeState,
             onValueChange = { nomeState = it },
             placeholderText = "Nome completo",
@@ -127,7 +124,7 @@ fun TeladeCadastro() {
             onImeAction = { focusRequester2.requestFocus() }
         )
 
-        CustomTextField(
+        CustomOutlinedTextField(
             value = nomeUsuarioState,
             onValueChange = {
                 if(it.text.length<=50){ nomeUsuarioState = it }
@@ -149,7 +146,7 @@ fun TeladeCadastro() {
                 .align(Alignment.CenterHorizontally)
         )
 
-        CustomTextField(
+        CustomOutlinedTextField(
             value = telefoneState,
             onValueChange = {
                 //limitar o comprimento ao número de dígitos do telefone sem a máscara
@@ -167,7 +164,7 @@ fun TeladeCadastro() {
         )
 
 
-        CustomTextField(value = emailState,
+        CustomOutlinedTextField(value = emailState,
             onValueChange = { emailState = it },
             placeholderText = "Email",
             modifier = Modifier
@@ -177,7 +174,7 @@ fun TeladeCadastro() {
             onImeAction = { focusRequester5.requestFocus() }
         )
 
-        CustomTextField(
+        CustomOutlinedTextField(
             value = senhaState,
             onValueChange = { senhaState = it },
             placeholderText = "Senha",

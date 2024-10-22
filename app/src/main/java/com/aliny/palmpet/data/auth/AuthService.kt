@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.widget.Toast
+import com.google.firebase.auth.AuthCredential
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -35,6 +37,10 @@ object AuthService {
             }
     }
 
+    fun getEmailCredential(email: String, password: String): AuthCredential {
+        return EmailAuthProvider.getCredential(email, password)
+    }
+
     fun loginComEmailESenha(email: String, senha: String, context: Context) {
         auth.signInWithEmailAndPassword(email, senha)
             .addOnCompleteListener { task ->
@@ -58,5 +64,7 @@ object AuthService {
                 }
             }
     }
+
+
 
 }

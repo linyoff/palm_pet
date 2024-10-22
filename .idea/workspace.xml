@@ -10,18 +10,38 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e799d7ac-36fd-43d1-9a9f-2045d3af6c6f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/modules/app/PalmPet.app.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/components/CustomOutlinedTextField.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/EditEmail.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/EditPetProfile.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.6/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.6/checksums/checksums.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.6/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.6/checksums/md5-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.6/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.6/checksums/sha1-checksums.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.6/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.6/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.6/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.6/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.6/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.6/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.6/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.6/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.6/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.6/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/PalmPet.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/deploymentTargetSelector.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deploymentTargetSelector.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/other.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/other.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/data/auth/AuthService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/data/auth/AuthService.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/data/repository/PetRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/data/repository/PetRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/data/repository/UserRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/data/repository/UserRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/components/CostumTextField.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/components/CustomDatePicker.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/components/CustomDatePicker.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/EditProfile.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/EditProfile.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/Home.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/Home.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/Login.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/Login.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/Settings.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/Settings.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/TelaCadastro.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/TelaCadastro.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/TelaCadastroPet.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/TelaCadastroPet.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/TelaPet.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/TelaPet.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/viewmodel/PetViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/viewmodel/PetViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,7 +109,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -108,6 +128,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;com.google.services.firebase.aqiPopupShown&quot;: &quot;true&quot;,
@@ -147,6 +168,9 @@
     <key name="android.template.-742873723">
       <recent name="com.aliny.palmpet.view" />
     </key>
+    <key name="android.template.-1638110056">
+      <recent name="com.aliny.palmpet.ui.screens" />
+    </key>
     <key name="android.template.1386721313">
       <recent name="com.aliny.palmpet" />
     </key>
@@ -162,6 +186,9 @@
     </key>
     <key name="android.template.-728985686">
       <recent name="com.aliny.palmpet" />
+    </key>
+    <key name="android.template.1163669398">
+      <recent name="com.aliny.palmpet.ui.screens" />
     </key>
   </component>
   <component name="RunManager" selected="Android App.app">
@@ -314,5 +341,16 @@
       <updated>1715552827223</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

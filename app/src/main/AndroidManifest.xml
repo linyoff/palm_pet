@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
     <!-- Permissões necessárias -->
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
 
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -21,8 +20,26 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PalmPet"
         tools:targetApi="31">
-
-        <!-- Configuração do FileProvider -->
+        <activity
+            android:name=".ui.screens.EditPassword"
+            android:exported="false"
+            android:label="@string/title_activity_edit_password"
+            android:theme="@style/Theme.PalmPet" />
+        <activity
+            android:name=".ui.screens.EditEmail"
+            android:exported="false"
+            android:label="@string/title_activity_edit_email"
+            android:theme="@style/Theme.PalmPet" />
+        <activity
+            android:name=".ui.screens.Seguranca"
+            android:exported="false"
+            android:label="@string/title_activity_segurança"
+            android:theme="@style/Theme.PalmPet" />
+        <activity
+            android:name=".ui.screens.EditPetProfile"
+            android:exported="false"
+            android:label="@string/title_activity_edit_pet_profile"
+            android:theme="@style/Theme.PalmPet" /> <!-- Configuração do FileProvider -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -31,9 +48,7 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
-        </provider>
-
-        <!-- Telas -->
+        </provider> <!-- Telas -->
         <activity
             android:name=".ui.screens.Login"
             android:exported="false"

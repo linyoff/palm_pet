@@ -35,7 +35,9 @@ object PetRepository {
         teve_filhote: Boolean?,
         dataCioString: String,
         imageUri: Uri?, //parâmetro para a URI da imagem
-        context: Context
+        context: Context,
+        onSuccess: () -> Unit, //callback para sucesso
+        onFailure: () -> Unit //callback para falha
     ) {
         try {
             ValidationUtils.validarCampo(nome, "nome")
@@ -89,16 +91,19 @@ object PetRepository {
                                     .addOnSuccessListener {
                                         Log.i("TESTE", "Novo pet adicionado com sucesso!")
                                         Toast.makeText(context, "Pet adicionado com sucesso!", Toast.LENGTH_SHORT).show()
+                                        onSuccess() //callback de sucesso
                                     }
                                     .addOnFailureListener { e ->
                                         Log.e("TESTE", "Erro ao adicionar novo pet", e)
                                         Toast.makeText(context, "Erro ao adicionar pet no Firestore: ${e.message}", Toast.LENGTH_SHORT).show()
+                                        onFailure() //callback de falha
                                     }
                             }
                         }
                         .addOnFailureListener { e ->
                             Log.e("TESTE", "Erro ao fazer upload da imagem", e)
                             Toast.makeText(context, "Erro ao fazer upload da imagem: ${e.message}", Toast.LENGTH_SHORT).show()
+                            onFailure() //callback de falha
                         }
                 } else {
                     val pet = Pet(
@@ -125,10 +130,12 @@ object PetRepository {
                         .addOnSuccessListener {
                             Log.i("TESTE", "Novo pet adicionado com sucesso!")
                             Toast.makeText(context, "Pet adicionado com sucesso!", Toast.LENGTH_SHORT).show()
+                            onSuccess() //callback de sucesso
                         }
                         .addOnFailureListener { e ->
                             Log.e("TESTE", "Erro ao adicionar novo pet", e)
                             Toast.makeText(context, "Erro ao adicionar pet no Firestore: ${e.message}", Toast.LENGTH_SHORT).show()
+                            onFailure() //chama o callback de falha
                         }
                 }
             }
@@ -137,6 +144,7 @@ object PetRepository {
 
         } catch (e: Exception) {
             Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+            onFailure() //chama o callback de falha
         }
     }
 
@@ -181,5 +189,70 @@ object PetRepository {
                 onFailure(e)
             }
     }
+
+    fun deletePet(
+        petId: String,
+        context: Context,
+        onSuccess: () -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        db.collection("pets")
+            .document(petId)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    val pet = document.toObject(Pet::class.java)
+                    val imageUrl = pet?.imageUrl //url da imagem
+
+                    //excluindo a imagem primeiro
+                    if (imageUrl != null && imageUrl.isNotEmpty()) {
+                        val storageRef = storage.getReferenceFromUrl(imageUrl)
+                        storageRef.delete()
+                            .addOnSuccessListener {
+                                //imagem excluída
+                                deletePetFromFirestore(petId, context, onSuccess, onFailure)
+                            }
+                            .addOnFailureListener { e ->
+                                Log.e("TESTE", "Erro ao excluir a imagem do pet", e)
+                                Toast.makeText(context, "Erro ao excluir a imagem do pet: ${e.message}", Toast.LENGTH_SHORT).show()
+                                onFailure(e)
+                            }
+                    } else {
+                        //se não houver imagem exclui o pet
+                        deletePetFromFirestore(petId, context, onSuccess, onFailure)
+                    }
+                } else {
+                    Toast.makeText(context, "Pet não encontrado", Toast.LENGTH_SHORT).show()
+                    onFailure(Exception("Pet não encontrado"))
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e("TESTE", "Erro ao buscar o pet", e)
+                Toast.makeText(context, "Erro ao buscar o pet: ${e.message}", Toast.LENGTH_SHORT).show()
+                onFailure(e)
+            }
+    }
+
+    fun deletePetFromFirestore(
+        petId: String,
+        context: Context,
+        onSuccess: () -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        db.collection("pets")
+            .document(petId)
+            .delete()
+            .addOnSuccessListener {
+                Log.i("TESTE", "Pet excluído com sucesso")
+                Toast.makeText(context, "Pet excluído com sucesso", Toast.LENGTH_SHORT).show()
+                onSuccess()
+            }
+            .addOnFailureListener { e ->
+                Log.e("TESTE", "Erro ao excluir pet", e)
+                Toast.makeText(context, "Erro ao excluir pet: ${e.message}", Toast.LENGTH_SHORT).show()
+                onFailure(e)
+            }
+    }
+
 
 }

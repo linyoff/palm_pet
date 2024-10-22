@@ -6,4 +6,8 @@
     <string name="title_activity_tela_pet">TelaPet</string>
     <string name="title_activity_dados_usuario">DadosUsuario</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_edit_pet_profile">EditPetProfile</string>
+    <string name="title_activity_segurança">Segurança</string>
+    <string name="title_activity_edit_email">EditEmail</string>
+    <string name="title_activity_edit_password">EditPassword</string>
 </resources>

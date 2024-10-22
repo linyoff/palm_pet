@@ -6,7 +6,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -42,9 +41,8 @@ import androidx.compose.ui.unit.sp
 import com.aliny.palmpet.R
 import com.aliny.palmpet.data.auth.AuthService
 import com.aliny.palmpet.ui.theme.AzulFontes
-import com.aliny.palmpet.ui.theme.CianoBotoes
 import com.aliny.palmpet.ui.components.CustomButton
-import com.aliny.palmpet.ui.components.CustomTextField
+import com.aliny.palmpet.ui.components.CustomOutlinedTextField
 import com.aliny.palmpet.ui.theme.PalmPetTheme
 import com.aliny.palmpet.ui.theme.RosaPrincipal
 
@@ -103,7 +101,7 @@ fun LoginScreen() {
             fontSize = 20.sp,
             color = RosaPrincipal
         )
-        CustomTextField(
+        CustomOutlinedTextField(
             value = emailState,
             onValueChange = {emailState = it},
             placeholderText = "Email",
@@ -113,7 +111,7 @@ fun LoginScreen() {
             keyboardType = KeyboardType.Text,
             onImeAction = { focusRequester2.requestFocus() }
         )
-        CustomTextField(
+        CustomOutlinedTextField(
             value = senhaState,
             onValueChange = {senhaState = it},
             placeholderText = "Senha",

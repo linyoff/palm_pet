@@ -130,15 +130,115 @@ object UserRepository {
     }
 
     fun updateUser(
+        uid_user: String,
         nome_usuario: String,
         nome: String,
         dataNascimento: String,
         telefone: String,
-        email: String,
         imageUri: Uri?, //parâmetro para a URI da imagem
         context: Context
     ){
+        try {
+            //validações dos campos de entrada
+            ValidationUtils.validarCampo(nome_usuario, "nome_usuario")
+            ValidationUtils.validarCampo(nome, "nome")
+            ValidationUtils.validarCampo(dataNascimento, "data_nascimento")
+            ValidationUtils.validarCampo(telefone, "telefone")
 
+            //convertendo dataNascimento para timestamp
+            val dateFormat = SimpleDateFormat("dd/MM/yyyy")
+            val data = dateFormat.parse(dataNascimento)
+            val timestamp = Timestamp(Date(data.time))
+
+            //função para atualizar os dados do usuário no Firestore
+            fun updateUserData(imageUrl: String?) {
+                val updatedData = mutableMapOf<String, Any>(
+                    "nome_usuario" to nome_usuario,
+                    "nome" to nome,
+                    "dataNascimento" to timestamp,
+                    "telefone" to telefone
+                )
+
+                // Se houver uma nova URL de imagem, atualiza também
+                imageUrl?.let { updatedData["imageUrl"] = it }
+
+                //atualizando os dados do usuário no Firestore
+                db.collection("usuarios")
+                    .document(uid_user)
+                    .update(updatedData)
+                    .addOnSuccessListener {
+                        Toast.makeText(context, "Usuário atualizado com sucesso!", Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e("TESTE", "Erro ao atualizar usuário", e)
+                        Toast.makeText(context, "Erro ao atualizar usuário: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
+            }
+
+            //verificando se tem uma nova imagem para upload
+            if (imageUri != null) {
+                val storageRef = storage.reference.child("usuarios/$uid_user.jpg")
+                storageRef.putFile(imageUri)
+                    .addOnSuccessListener {
+                        storageRef.downloadUrl.addOnSuccessListener { uri ->
+                            //chama a função para salvar os dados do usuário com a nova imagem
+                            updateUserData(uri.toString())
+                        }
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e("TESTE", "Erro ao fazer upload da imagem", e)
+                        Toast.makeText(context, "Erro ao fazer upload da imagem: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
+            } else {
+                //apenas atualiza os dados do usuário sem modificar a URL da imagem
+                updateUserData(null)
+            }
+
+        } catch (e: CampoInvalidoException) {
+            Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) {
+            Log.e("TESTE", "Erro inesperado: ${e.message}", e)
+        }
     }
+
+    /*fun updateUserEmail(
+        uid_user: String,
+        newEmail: String,
+        password: String, //reautenticar o usuário antes da troca de email
+        context: Context,
+        onSuccess: () -> Unit, //callback para quando a operação for bem-sucedida
+        onFailure: (String) -> Unit //callback para quando a operação falhar
+    ) {
+        //reautentica o usuário antes de alterar o e-mail
+        val credential = AuthService.getEmailCredential(user.email!!, password)
+
+        user.reauthenticate(credential)
+            .addOnSuccessListener {
+                //atualiza o e-mail
+                user.updateEmail(newEmail)
+                    .addOnSuccessListener {
+                        //atualiza no firestore também
+                        db.collection("usuarios")
+                            .document(user.uid)
+                            .update("email", newEmail)
+                            .addOnSuccessListener {
+                                Toast.makeText(context, "Email atualizado com sucesso!", Toast.LENGTH_SHORT).show()
+                                onSuccess()
+                            }
+                            .addOnFailureListener { e ->
+                                    Log.e("UPDATE_EMAIL", "Erro ao atualizar o e-mail no Firestore", e)
+                                    onFailure("Erro ao atualizar o e-mail no Firestore: ${e.message}")
+                            }
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e("UPDATE_EMAIL", "Erro ao atualizar o e-mail no Firebase Authentication", e)
+                        onFailure("Erro ao atualizar o e-mail: ${e.message}")
+                    }
+            }
+            .addOnFailureListener { e ->
+                Log.e("REAUTHENTICATE", "Erro ao reautenticar o usuário", e)
+                onFailure("Erro ao reautenticar o usuário: ${e.message}")
+            }
+    }*/
 
 }
