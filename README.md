@@ -1,1 +1,1 @@
-# palm_pet
+# Palm Pet
