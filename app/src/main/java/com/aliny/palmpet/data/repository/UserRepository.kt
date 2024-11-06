@@ -9,6 +9,7 @@ import com.aliny.palmpet.data.auth.AuthService
 import com.aliny.palmpet.util.CampoInvalidoException
 import com.aliny.palmpet.util.ValidationUtils
 import com.google.firebase.Timestamp
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -201,44 +202,78 @@ object UserRepository {
         }
     }
 
-    /*fun updateUserEmail(
+    fun updateUserEmail(
         uid_user: String,
         newEmail: String,
-        password: String, //reautenticar o usuário antes da troca de email
-        context: Context,
-        onSuccess: () -> Unit, //callback para quando a operação for bem-sucedida
-        onFailure: (String) -> Unit //callback para quando a operação falhar
+        password: String,
+        context: Context
     ) {
-        //reautentica o usuário antes de alterar o e-mail
+        val user = Firebase.auth.currentUser
+        if (user == null) {
+            Toast.makeText(context, "Usuário não autenticado", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        //pegando as credenciais para reautenticação
         val credential = AuthService.getEmailCredential(user.email!!, password)
 
         user.reauthenticate(credential)
             .addOnSuccessListener {
-                //atualiza o e-mail
                 user.updateEmail(newEmail)
                     .addOnSuccessListener {
-                        //atualiza no firestore também
-                        db.collection("usuarios")
-                            .document(user.uid)
+                        //atualizando no firestore
+                        Firebase.firestore.collection("usuarios")
+                            .document(uid_user)
                             .update("email", newEmail)
                             .addOnSuccessListener {
                                 Toast.makeText(context, "Email atualizado com sucesso!", Toast.LENGTH_SHORT).show()
-                                onSuccess()
                             }
                             .addOnFailureListener { e ->
-                                    Log.e("UPDATE_EMAIL", "Erro ao atualizar o e-mail no Firestore", e)
-                                    onFailure("Erro ao atualizar o e-mail no Firestore: ${e.message}")
+                                Log.e("UPDATE_EMAIL", "Erro ao atualizar o e-mail no Firestore", e)
+                                Toast.makeText(context, "Erro ao atualizar o e-mail no Firestore", Toast.LENGTH_SHORT).show()
                             }
                     }
                     .addOnFailureListener { e ->
                         Log.e("UPDATE_EMAIL", "Erro ao atualizar o e-mail no Firebase Authentication", e)
-                        onFailure("Erro ao atualizar o e-mail: ${e.message}")
+                        Toast.makeText(context, "Erro ao atualizar o e-mail no Firebase Authentication", Toast.LENGTH_SHORT).show()
                     }
             }
             .addOnFailureListener { e ->
                 Log.e("REAUTHENTICATE", "Erro ao reautenticar o usuário", e)
-                onFailure("Erro ao reautenticar o usuário: ${e.message}")
+                Toast.makeText(context, "Erro ao reautenticar o usuário", Toast.LENGTH_SHORT).show()
             }
-    }*/
+    }
+
+    fun updateUserPassword(
+        currentPassword: String,
+        newPassword: String,
+        context: Context
+    ) {
+        val user = Firebase.auth.currentUser
+        if (user == null) {
+            Toast.makeText(context, "Usuário não autenticado", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        //pegando as credenciais para reautenticação
+        val credential = AuthService.getEmailCredential(user.email!!, currentPassword)
+
+        user.reauthenticate(credential)
+            .addOnSuccessListener {
+                user.updatePassword(newPassword)
+                    .addOnSuccessListener {
+                        Toast.makeText(context, "Senha atualizada com sucesso!", Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e("UPDATE_PASSWORD", "Erro ao atualizar a senha no Firebase Authentication", e)
+                        Toast.makeText(context, "Erro ao atualizar a senha: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
+            }
+            .addOnFailureListener { e ->
+                Log.e("REAUTHENTICATE", "Erro ao reautenticar o usuário", e)
+                Toast.makeText(context, "Erro ao reautenticar o usuário: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
 
 }

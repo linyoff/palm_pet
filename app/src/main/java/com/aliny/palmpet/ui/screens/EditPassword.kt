@@ -4,13 +4,20 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.aliny.palmpet.data.repository.UserRepository
+import com.aliny.palmpet.ui.components.CustomButton
+import com.aliny.palmpet.ui.components.CustomOutlinedTextField
 import com.aliny.palmpet.ui.theme.PalmPetTheme
 
 class EditPassword : ComponentActivity() {
@@ -19,11 +26,8 @@ class EditPassword : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             PalmPetTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting4(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                Surface {
+                    EditPasswordScreen()
                 }
             }
         }
@@ -31,17 +35,75 @@ class EditPassword : ComponentActivity() {
 }
 
 @Composable
-fun Greeting4(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
+fun EditPasswordScreen() {
+    var currentPassword by remember { mutableStateOf(TextFieldValue("")) }
+    var newPassword by remember { mutableStateOf(TextFieldValue("")) }
+    var confirmPassword by remember { mutableStateOf(TextFieldValue("")) }
+    val context = LocalContext.current
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        Text(
+            text = "Alterar Senha",
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier
+                .padding(top = 35.dp),
+            fontSize = 22.sp,
+        )
+
+        //senha atual
+        CustomOutlinedTextField(
+            value = currentPassword,
+            onValueChange = { currentPassword = it },
+            placeholderText = "Senha Atual",
+            modifier = Modifier.fillMaxWidth(),
+            keyboardType = KeyboardType.Password,
+            visualTransformation = PasswordVisualTransformation()
+        )
+
+        //nova senha
+        CustomOutlinedTextField(
+            value = newPassword,
+            onValueChange = { newPassword = it },
+            placeholderText = "Nova Senha",
+            modifier = Modifier.fillMaxWidth(),
+            keyboardType = KeyboardType.Password,
+            visualTransformation = PasswordVisualTransformation()
+        )
+
+        //confirmar a nova senha
+        CustomOutlinedTextField(
+            value = confirmPassword,
+            onValueChange = { confirmPassword = it },
+            placeholderText = "Confirmar Nova Senha",
+            modifier = Modifier.fillMaxWidth(),
+            keyboardType = KeyboardType.Password,
+            visualTransformation = PasswordVisualTransformation()
+        )
+
+        //salvar as alterações
+        CustomButton(
+            onClickAction = {
+                UserRepository.updateUserPassword(
+                    currentPassword = currentPassword.text,
+                    context = context,
+                    newPassword = newPassword.text
+                )
+            },
+            modifier = Modifier.fillMaxWidth(),
+            text = "Salvar Alterações"
+        )
+    }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview3() {
+fun EditPasswordScreenPreview() {
     PalmPetTheme {
-        Greeting4("Android")
+        EditPasswordScreen()
     }
 }
