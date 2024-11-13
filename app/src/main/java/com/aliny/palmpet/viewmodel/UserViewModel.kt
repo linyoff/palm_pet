@@ -12,6 +12,8 @@ class UserViewModel : ViewModel() {
 
     val _userData = MutableLiveData<Usuario?>()
     val userData: LiveData<Usuario?> get() = _userData
+    val _userList = MutableLiveData<List<Usuario>>()
+    val userList: LiveData<List<Usuario>> get() = _userList
 
     var cachedUser: Usuario? = null
 

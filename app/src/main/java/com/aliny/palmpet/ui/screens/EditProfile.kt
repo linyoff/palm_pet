@@ -96,7 +96,7 @@ fun EditProfile(userViewModel: UserViewModel = viewModel()) {
     val imagePickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
-        // Atualiza a URI da imagem ao selecionar uma nova
+        //atualiza a URI da imagem ao selecionar uma nova
         if (uri != null) {
             imageUri = uri
         }
@@ -124,11 +124,11 @@ fun EditProfile(userViewModel: UserViewModel = viewModel()) {
                     .background(CinzaContainersClaro, shape = MaterialTheme.shapes.medium),
                 contentAlignment = Alignment.Center
             ) {
-                // Exibe a nova imagem selecionada, se houver
+                //mostra nova imagem selecionada
                 val painter = if (imageUri != null) {
                     rememberImagePainter(data = imageUri)
                 } else {
-                    // Exibe a imagem anterior do usuário
+                    //mostra imagem anterior do usuário
                     rememberImagePainter(data = userData?.imageUrl)
                 }
 
@@ -146,7 +146,7 @@ fun EditProfile(userViewModel: UserViewModel = viewModel()) {
                     modifier = Modifier
                         .size(60.dp)
                         .clickable {
-                            // Abre o seletor de imagem ao clicar no ícone
+                            //seletor de imagem
                             imagePickerLauncher.launch("image/*")
                         }
                         .align(Alignment.Center),

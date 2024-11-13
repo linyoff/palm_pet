@@ -6,6 +6,7 @@ import android.net.Uri
 import android.util.Log
 import android.widget.Toast
 import com.aliny.palmpet.data.model.Pet
+import com.aliny.palmpet.util.CampoInvalidoException
 import com.aliny.palmpet.util.ValidationUtils
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.ktx.firestore
@@ -82,7 +83,7 @@ object PetRepository {
                                     ja_cruzou,
                                     teve_filhote,
                                     data_cio,
-                                    uri.toString() // Salvar a URL da imagem no Firestore
+                                    uri.toString() //salvar a URL da imagem no Firestore
                                 )
 
                                 db.collection("pets")
@@ -252,6 +253,99 @@ object PetRepository {
                 Toast.makeText(context, "Erro ao excluir pet: ${e.message}", Toast.LENGTH_SHORT).show()
                 onFailure(e)
             }
+    }
+
+    fun updatePet(
+        petId: String,
+        nome: String,
+        dataNascString: String,
+        especie: String,
+        raca: String,
+        castrado: Boolean,
+        peso: Float,
+        sexo: String,
+        cor: String,
+        tipo_pelagem: String,
+        ja_cruzou: Boolean?,
+        teve_filhote: Boolean?,
+        dataCioString: String,
+        imageUri: Uri?, //parâmetro para a URI da imagem
+        context: Context
+    ) {
+        try {
+            ValidationUtils.validarCampo(nome, "nome")
+            ValidationUtils.validarCampo(especie, "especie")
+            ValidationUtils.validarCampo(raca, "raca")
+            ValidationUtils.validarCampo(sexo, "sexo")
+            ValidationUtils.validarCampo(cor, "cor")
+            ValidationUtils.validarCampo(tipo_pelagem, "tipo_pelagem")
+
+            //convertendo datas para timestamp
+            val dateFormat = SimpleDateFormat("dd/MM/yyyy")
+            val dataNasc = dateFormat.parse(dataNascString)
+            val dataNascimento = Timestamp(Date(dataNasc.time))
+
+            var dataCio: Timestamp? = null
+            if (dataCioString.isNotEmpty()) {
+                val dataCioParsed = dateFormat.parse(dataCioString)
+                dataCio = Timestamp(Date(dataCioParsed.time))
+            }
+
+            //atualiza os dados do pet no Firestore
+            fun updatePetData(imageUrl: String?) {
+                val updatedData = mutableMapOf<String, Any>(
+                    "nome" to nome,
+                    "data_nascimento" to dataNascimento,
+                    "especie" to especie,
+                    "raca" to raca,
+                    "castrado" to castrado,
+                    "peso" to peso,
+                    "sexo" to sexo,
+                    "cor" to cor,
+                    "tipo_pelagem" to tipo_pelagem
+                )
+
+                ja_cruzou?.let { updatedData["ja_cruzou"] = it }
+                teve_filhote?.let { updatedData["teve_filhote"] = it }
+                dataCio?.let { updatedData["data_cio"] = it }
+                imageUrl?.let { updatedData["imageUrl"] = it }
+
+                //atualizando os dados do pet no Firestore
+                db.collection("pets")
+                    .document(petId)
+                    .update(updatedData)
+                    .addOnSuccessListener {
+                        Toast.makeText(context, "Pet atualizado com sucesso!", Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e("TESTE", "Erro ao atualizar pet", e)
+                        Toast.makeText(context, "Erro ao atualizar pet: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
+            }
+
+            //verificando se há nova imagem para upload
+            if (imageUri != null) {
+                val storageRef = storage.reference.child("pets/$petId.jpg")
+                storageRef.putFile(imageUri)
+                    .addOnSuccessListener {
+                        storageRef.downloadUrl.addOnSuccessListener { uri ->
+                            updatePetData(uri.toString())
+                        }
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e("TESTE", "Erro ao fazer upload da imagem", e)
+                        Toast.makeText(context, "Erro ao fazer upload da imagem: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
+            } else {
+                //vpenas atualiza os dados do pet sem modificar a URL da imagem
+                updatePetData(null)
+            }
+
+        } catch (e: CampoInvalidoException) {
+            Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) {
+            Log.e("TESTE", "Erro inesperado: ${e.message}", e)
+        }
     }
 
 

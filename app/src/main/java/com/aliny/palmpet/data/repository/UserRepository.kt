@@ -219,6 +219,7 @@ object UserRepository {
 
         user.reauthenticate(credential)
             .addOnSuccessListener {
+                //
                 user.updateEmail(newEmail)
                     .addOnSuccessListener {
                         //atualizando no firestore

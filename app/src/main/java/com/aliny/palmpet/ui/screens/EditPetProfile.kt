@@ -1,26 +1,36 @@
 package com.aliny.palmpet.ui.screens
 
+import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -31,6 +41,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -40,7 +51,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.rememberImagePainter
 import com.aliny.palmpet.R
+import com.aliny.palmpet.data.repository.PetRepository
 import com.aliny.palmpet.ui.components.CustomButton
 import com.aliny.palmpet.ui.components.CustomDatePicker
 import com.aliny.palmpet.ui.components.CustomOutlinedTextField
@@ -61,8 +74,7 @@ class EditPetProfile : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = Color.White
                 ) {
-                    val petViewModel: PetViewModel = viewModel()
-                    EditPetProfile(petViewModel = petViewModel)
+                    EditPetProfileScreen()
                 }
             }
         }
@@ -70,17 +82,21 @@ class EditPetProfile : ComponentActivity() {
 }
 
 @Composable
-fun EditPetProfile(petViewModel: PetViewModel = viewModel()) {
+fun EditPetProfileScreen(petViewModel: PetViewModel = viewModel()) {
 
     val petId = (LocalContext.current as ComponentActivity).intent.getStringExtra("pet_id")
     val petData by petViewModel.pet.observeAsState()
     val context = LocalContext.current
 
-
+    LaunchedEffect(petId) {
+        petId?.let {
+            petViewModel.loadPetById(it)
+        } ?: Toast.makeText(context, "Erro ao carregar pet", Toast.LENGTH_SHORT).show()
+    }
 
     //controladores de estado para os campos de entrada
-    var nomeState by remember { mutableStateOf(TextFieldValue("")) }
-    var dataNascState by remember { mutableStateOf(TextFieldValue()) }
+    var nomeState by remember { mutableStateOf(TextFieldValue()) }
+    var dataNascState by remember { mutableStateOf("") }
     var racaState by remember { mutableStateOf(TextFieldValue()) }
     var castradoState = remember { mutableStateOf(false) }
     var pesoState by remember { mutableStateOf(TextFieldValue()) }
@@ -97,57 +113,110 @@ fun EditPetProfile(petViewModel: PetViewModel = viewModel()) {
     var estadoExpanded2 by remember { mutableStateOf(false) }
     var estadoExpanded3 by remember { mutableStateOf(false) }
 
-    //lisatas do DropDownMenus
+    //listas do DropDownMenus
     val especies = listOf("Cão", "Gato", "Ave", "Tartaruga", "Peixe", "Roedor")
     val sexo = listOf("Macho", "Fêmea")
     var pelagem = listOf("Baixa", "Média", "Alta")
+
+    //estado para a URI da nova imagem selecionada
+    var imageUri by remember { mutableStateOf<Uri?>(null) }
 
     LaunchedEffect(petData) {
         petData?.let { pet ->
             nomeState = TextFieldValue(pet.nome ?: "")
             racaState = TextFieldValue(pet.raca ?: "")
-            dataNascState = TextFieldValue(
-                pet.data_nascimento?.let {
-                    SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(it)
-                } ?: ""
-            )
+
+            // Conversão de Timestamp para formato legível
+            dataNascState = pet.data_nascimento?.let { timestamp ->
+                try {
+                    val date = timestamp.toDate() //converte o timestamp para date
+                    SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(date)
+                } catch (e: Exception) {
+                    ""
+                }
+            } ?: ""
+
             especieState = pet.especie ?: "Selecione a espécie"
             sexoState = pet.sexo ?: "Selecione o sexo do animal"
             castradoState.value = pet.castrado ?: false
             pesoState = TextFieldValue(pet.peso?.toString() ?: "")
             corState = TextFieldValue(pet.cor ?: "")
             pelagemState = pet.tipo_pelagem ?: "Tamanho de pelagem"
-            dataCioState = pet.data_cio?.let {
-                SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(it)
+
+            dataCioState = pet.data_cio?.let { timestamp ->
+                try {
+                    val date = timestamp.toDate() //converte o timestamp para date
+                    SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(date)
+                } catch (e: Exception) {
+                    ""
+                }
             } ?: ""
+
             jaCruzouState.value = pet.ja_cruzou ?: false
             teveFilhoteState.value = pet.teve_filhote ?: false
         }
     }
 
+    //lançador para selecionar a imagem
+    val imagePickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        //atualiza a URI da imagem ao selecionar uma nova
+        if (uri != null) {
+            imageUri = uri
+        }
+    }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {
-        // Logo ou Imagem do Pet
-        Image(
-            painter = painterResource(id = R.drawable.logopalmpet),
-            contentDescription = "Logo",
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(150.dp)
-                .padding(top = 30.dp, bottom = 3.dp)
-        )
-        Text(
-            text = "Edite os dados do seu Pet:",
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(vertical = 8.dp),
-            fontSize = 22.sp,
-            color = RosaPrincipal
-        )
+                .padding(top = 55.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(200.dp)
+                    .clip(CircleShape)
+                    .background(CinzaContainersClaro, shape = MaterialTheme.shapes.medium),
+                contentAlignment = Alignment.Center
+            ) {
+                //mostra a nova imagem selecionada
+                val painter = if (imageUri != null) {
+                    rememberImagePainter(data = imageUri)
+                } else {
+                    //mostra imagem anterior do pet
+                    rememberImagePainter(data = petData?.imageUrl)
+                }
+
+                Image(
+                    painter = painter,
+                    contentDescription = "Foto do pet",
+                    modifier = Modifier
+                        .size(190.dp)
+                        .clip(CircleShape)
+                )
+
+                Icon(
+                    imageVector = Icons.Outlined.Edit,
+                    contentDescription = "Selecionar Foto",
+                    modifier = Modifier
+                        .size(60.dp)
+                        .clickable {
+                            //seletor de imagem
+                            imagePickerLauncher.launch("image/*")
+                        }
+                        .align(Alignment.Center),
+                    tint = Color.White
+                )
+            }
+        }
+
+
         CustomOutlinedTextField(
             value = nomeState,
             onValueChange = { nomeState = it },
@@ -157,13 +226,12 @@ fun EditPetProfile(petViewModel: PetViewModel = viewModel()) {
         )
 
         CustomDatePicker(
-            label = "Data de nascimento",
-            selectedDate = dataNascState.text,
-            onDateSelected = { dataNascState = it },
+            label = dataNascState,
+            selectedDate = dataNascState,
+            onDateSelected = { dataNascState = it.text },
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
 
-        // DropDown para seleção de espécie
         Column(
             modifier = Modifier
                 .height(54.dp)
@@ -205,7 +273,6 @@ fun EditPetProfile(petViewModel: PetViewModel = viewModel()) {
             keyboardType = KeyboardType.Text
         )
 
-        // Checkbox para selecionar se o pet é castrado
         Column(
             modifier = Modifier
                 .height(54.dp)
@@ -230,7 +297,6 @@ fun EditPetProfile(petViewModel: PetViewModel = viewModel()) {
             }
         }
 
-        // Seleção de sexo
         Column(
             modifier = Modifier
                 .height(54.dp)
@@ -264,7 +330,7 @@ fun EditPetProfile(petViewModel: PetViewModel = viewModel()) {
             }
         }
 
-        // Exibe mais campos se o pet for fêmea
+        //exibe mais campos se o pet for fêmea
         if (sexoState == "Fêmea") {
             Column(
                 modifier = Modifier
@@ -342,7 +408,6 @@ fun EditPetProfile(petViewModel: PetViewModel = viewModel()) {
             keyboardType = KeyboardType.Text
         )
 
-        // Seleção de pelagem
         Column(
             modifier = Modifier
                 .height(54.dp)
@@ -379,9 +444,37 @@ fun EditPetProfile(petViewModel: PetViewModel = viewModel()) {
         CustomButton(
             onClickAction = {
 
+                //validar e converter os estados dos campos necessários
+                val peso = try {
+                    pesoState.text.toFloat()
+                } catch (e: NumberFormatException) {
+                    Toast.makeText(context, "Peso inválido. Insira um número válido", Toast.LENGTH_SHORT).show()
+                    return@CustomButton
+                }
+
+                petData?.let {
+                    PetRepository.updatePet(
+                        petId = petId.toString(),
+                        nome = nomeState.text,
+                        dataNascString = dataNascState,
+                        especie = especieState,
+                        raca = racaState.text,
+                        castrado = castradoState.value,
+                        peso = peso,
+                        sexo = sexoState,
+                        cor = corState.text,
+                        tipo_pelagem = pelagemState,
+                        ja_cruzou = jaCruzouState.value,
+                        teve_filhote = teveFilhoteState.value,
+                        dataCioString = dataCioState,
+                        imageUri = imageUri,
+                        context = context
+                    )
+                }
             },
             modifier = Modifier
-                .align(Alignment.CenterHorizontally),
+                .align(Alignment.CenterHorizontally)
+                .padding(bottom = 2.dp),
             text = "Salvar"
         )
     }
@@ -395,8 +488,7 @@ fun EditPetProfilePreview() {
             modifier = Modifier.fillMaxSize(),
             color = Color.White
         ) {
-            val petViewModel: PetViewModel = viewModel()
-            EditPetProfile(petViewModel = petViewModel)
+            EditPetProfileScreen()
         }
     }
 }
