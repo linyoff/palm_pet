@@ -50,4 +50,22 @@ class UserViewModel : ViewModel() {
                 _userData.postValue(null)
             }
     }
+
+    //função para pesquisar usuários
+    fun searchUsers(query: String) {
+        val db = Firebase.firestore
+        db.collection("usuarios")
+            //seja maior ou igual ao valor da query, comparar os valores alfabeticamente
+            .whereGreaterThanOrEqualTo("nome_usuario", query)
+            //assegura que todos os nomes de usuário começando com o query sejam retornados por busca fuzzy
+            .whereLessThanOrEqualTo("nome_usuario", query + "\uf8ff")
+            .get()
+            .addOnSuccessListener { documents ->
+                val users = documents.mapNotNull { it.toObject(Usuario::class.java) }
+                _userList.postValue(users)
+            }
+            .addOnFailureListener {
+                _userList.postValue(emptyList())
+            }
+    }
 }

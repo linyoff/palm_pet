@@ -160,7 +160,7 @@ object UserRepository {
                     "telefone" to telefone
                 )
 
-                // Se houver uma nova URL de imagem, atualiza também
+                //atualizando nova imagem
                 imageUrl?.let { updatedData["imageUrl"] = it }
 
                 //atualizando os dados do usuário no Firestore

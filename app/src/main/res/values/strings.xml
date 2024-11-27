@@ -10,4 +10,9 @@
     <string name="title_activity_segurança">Segurança</string>
     <string name="title_activity_edit_email">EditEmail</string>
     <string name="title_activity_edit_password">EditPassword</string>
+    <string name="title_activity_agendar_consulta">AgendarConsulta</string>
+    <string name="title_activity_medicacoes">Medicacoes</string>
+    <string name="title_activity_historico">Historico</string>
+    <string name="title_activity_adicionar_medicacao">AdicionarMedicacao</string>
+    <string name="title_activity_agendar_compromisso">AgendarCompromisso</string>
 </resources>

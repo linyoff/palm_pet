@@ -265,6 +265,9 @@ fun InfoCard(label: String, value: String) {
 
 @Composable
 fun BotoesDeAcaoPet() {
+
+    val context = LocalContext.current
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -275,6 +278,10 @@ fun BotoesDeAcaoPet() {
             text = "Medicações e vacinas",
             backgroundColor = CianoBotoes,
             iconResId = R.drawable.icon_medicacoes,
+            onClick = {
+                val intent = Intent(context, Medicacoes::class.java)
+                context.startActivity(intent)
+            },
             modifier = Modifier
                 .size(110.dp)
         )
@@ -283,6 +290,10 @@ fun BotoesDeAcaoPet() {
             text = "Histórico",
             backgroundColor = RosaPrincipal,
             iconResId = R.drawable.icon_exame,
+            onClick = {
+                val intent = Intent(context, Historico::class.java)
+                context.startActivity(intent)
+            },
             modifier = Modifier
                 .size(110.dp)
         )
@@ -291,6 +302,10 @@ fun BotoesDeAcaoPet() {
             text = "Agendar consulta",
             backgroundColor = CianoBotoes,
             iconResId = R.drawable.icon_consulta,
+            onClick = {
+                val intent = Intent(context, AgendarConsulta::class.java)
+                context.startActivity(intent)
+            },
             modifier = Modifier
                 .size(110.dp)
         )

@@ -30,7 +30,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberImagePainter
 import com.aliny.palmpet.ui.theme.AzulFontes
-import com.aliny.palmpet.ui.theme.CianoBotoes
 import com.aliny.palmpet.ui.theme.CinzaContainersClaro
 import com.aliny.palmpet.ui.theme.PalmPetTheme
 import com.aliny.palmpet.viewmodel.UserViewModel

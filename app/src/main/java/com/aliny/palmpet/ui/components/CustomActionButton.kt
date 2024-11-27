@@ -23,15 +23,14 @@ fun ActionButton(
     text: String,
     backgroundColor: Color,
     iconResId: Int,
-    modifier: Modifier
+    modifier: Modifier,
+    onClick: () -> Unit
 ) {
     Box(
         modifier = modifier
             .size(115.dp)
             .background(backgroundColor, shape = RoundedCornerShape(21.dp))
-            .clickable {
-
-            },
+            .clickable { onClick() },
         contentAlignment = Alignment.CenterStart
     ) {
         Column(

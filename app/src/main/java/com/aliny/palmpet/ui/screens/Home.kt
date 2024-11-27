@@ -110,12 +110,18 @@ fun BotoesDeAcao() {
             text = "Procurar veterinários",
             backgroundColor = RosaPrincipal,
             iconResId = R.drawable.icon_procurar_vet,
+            onClick = {
+
+            },
             modifier = Modifier.size(130.dp)
         )
         ActionButton(
             text = "Agendar um Compromisso",
             backgroundColor = CianoBotoes,
             iconResId = R.drawable.icon_compromisso,
+            onClick = {
+
+            },
             modifier = Modifier.size(130.dp)
         )
     }

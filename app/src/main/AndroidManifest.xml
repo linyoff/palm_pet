@@ -21,6 +21,31 @@
         android:theme="@style/Theme.PalmPet"
         tools:targetApi="31">
         <activity
+            android:name=".ui.screens.AgendarCompromisso"
+            android:exported="false"
+            android:label="@string/title_activity_agendar_compromisso"
+            android:theme="@style/Theme.PalmPet" />
+        <activity
+            android:name=".ui.screens.AdicionarMedicacao"
+            android:exported="false"
+            android:label="@string/title_activity_adicionar_medicacao"
+            android:theme="@style/Theme.PalmPet" />
+        <activity
+            android:name=".ui.screens.Historico"
+            android:exported="false"
+            android:label="@string/title_activity_historico"
+            android:theme="@style/Theme.PalmPet" />
+        <activity
+            android:name=".ui.screens.Medicacoes"
+            android:exported="false"
+            android:label="@string/title_activity_medicacoes"
+            android:theme="@style/Theme.PalmPet" />
+        <activity
+            android:name=".ui.screens.AgendarConsulta"
+            android:exported="false"
+            android:label="@string/title_activity_agendar_consulta"
+            android:theme="@style/Theme.PalmPet" />
+        <activity
             android:name=".ui.screens.EditPassword"
             android:exported="false"
             android:label="@string/title_activity_edit_password"
