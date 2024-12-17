@@ -1,6 +1,5 @@
 package com.aliny.palmpet.ui.screens
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -32,18 +31,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.viewmodel.compose.viewModel
-import coil.compose.rememberImagePainter
+import coil.compose.rememberAsyncImagePainter
 import com.aliny.palmpet.data.model.Pet
 import com.aliny.palmpet.ui.theme.AzulFontes
 import com.aliny.palmpet.ui.theme.CinzaContainersClaro
-import com.aliny.palmpet.ui.theme.CinzaContainersEscuro
 import com.aliny.palmpet.ui.theme.PalmPetTheme
 import com.aliny.palmpet.viewmodel.PetViewModel
 import com.aliny.palmpet.viewmodel.UserViewModel
@@ -68,7 +65,7 @@ class PublicUserProfile : ComponentActivity() {
 
 @Composable
 fun PublicUserProfileScreen(userId: String) {
-    val context = LocalContext.current
+
     val userViewModel: UserViewModel = viewModel()
     val petViewModel: PetViewModel = viewModel()
 
@@ -111,7 +108,7 @@ fun PublicUserProfileScreen(userId: String) {
             ) {
                 user?.let { user ->
                     if (!user.imageUrl.isNullOrEmpty()) {
-                        val painter = rememberImagePainter(data = user.imageUrl)
+                        val painter = rememberAsyncImagePainter(model = user.imageUrl)
                         Image(
                             painter = painter,
                             contentDescription = "Foto do usuário",
@@ -198,7 +195,7 @@ fun PetsListUser(pets: List<Pet>) {
 
 @Composable
 fun PetItemUser(pet: Pet) {
-    val context = LocalContext.current
+
     val imageUrl = pet.imageUrl
 
     //estado para mostrar ou esconder o botão
@@ -223,8 +220,8 @@ fun PetItemUser(pet: Pet) {
                     .background(CinzaContainersClaro, RoundedCornerShape(21.dp)),
                 contentAlignment = Alignment.Center
             ) {
-                if (imageUrl != null && imageUrl.isNotEmpty()) {
-                    val painter: Painter = rememberImagePainter(data = imageUrl)
+                if (!imageUrl.isNullOrEmpty()) {
+                    val painter: Painter = rememberAsyncImagePainter(model = imageUrl)
                     Image(
                         painter = painter,
                         contentDescription = "Foto do pet",

@@ -46,11 +46,13 @@ fun CustomTextField(
             .fillMaxWidth(0.80f)
             .padding(3.dp),
         shape = RoundedCornerShape(17.dp),
-        colors = TextFieldDefaults.textFieldColors(
-            containerColor = CinzaContainersClaro,
+        colors = TextFieldDefaults.colors(
+            focusedContainerColor = CinzaContainersClaro,
+            unfocusedContainerColor = CinzaContainersClaro,
+            disabledContainerColor = CinzaContainersClaro,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
-            disabledIndicatorColor = Color.Transparent
+            disabledIndicatorColor = Color.Transparent,
         ),
         visualTransformation = visualTransformation,
         keyboardOptions = KeyboardOptions.Default.copy(

@@ -29,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.rememberAsyncImagePainter
 import coil.compose.rememberImagePainter
 import com.aliny.palmpet.R
 import com.aliny.palmpet.data.model.Pet
@@ -179,7 +180,7 @@ fun PetItem(pet: Pet) {
             contentAlignment = Alignment.Center
         ) {
             if (imageUrl != null && imageUrl.isNotEmpty()) {
-                val painter: Painter = rememberImagePainter(data = imageUrl)
+                val painter: Painter = rememberAsyncImagePainter(model = imageUrl)
                 Image(
                     painter = painter,
                     contentDescription = "Foto do pet",
