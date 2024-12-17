@@ -184,24 +184,23 @@ fun DrawerContent(navController: NavHostController, onCloseDrawer: () -> Unit) {
     val context = LocalContext.current
     var showLogoutDialog by remember { mutableStateOf(false) }
 
-    // Função para exibir o diálogo de confirmação
+    //função para exibir o diálogo de confirmação
     fun showLogoutConfirmation() {
         showLogoutDialog = true
     }
 
-    // Função para confirmar o logout
+    //função para confirmar o logout
     fun confirmLogout() {
         showLogoutDialog = false
         logout(context)
         onCloseDrawer()
     }
 
-    // Função para cancelar o logout
+    //função para cancelar o logout
     fun cancelLogout() {
         showLogoutDialog = false
     }
 
-    // Exibir o diálogo de confirmação se necessário
     if (showLogoutDialog) {
         AlertDialog(
             onDismissRequest = { showLogoutDialog = false },

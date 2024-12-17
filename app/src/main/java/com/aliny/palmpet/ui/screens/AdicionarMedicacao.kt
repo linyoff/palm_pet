@@ -8,7 +8,9 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -19,6 +21,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -27,16 +31,20 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.aliny.palmpet.data.repository.MedRepository
 import com.aliny.palmpet.ui.components.CustomButton
 import com.aliny.palmpet.ui.components.CustomDatePicker
 import com.aliny.palmpet.ui.components.CustomTextField
+import com.aliny.palmpet.ui.theme.AzulFontes
 import com.aliny.palmpet.ui.theme.CinzaContainersClaro
+import com.aliny.palmpet.ui.theme.CinzaContainersEscuro
 import com.aliny.palmpet.ui.theme.PalmPetTheme
 import com.aliny.palmpet.ui.theme.RosaPrincipal
 
@@ -60,8 +68,7 @@ fun AddMedicacoesScreen() {
     var nomeState by remember { mutableStateOf(TextFieldValue()) }
     var tipoState by remember { mutableStateOf("Tipo (Medicação ou Vacina)") }
     var dataState by remember { mutableStateOf("") }
-    var petState by remember { mutableStateOf(TextFieldValue()) }
-    var doseReforcoState by remember { mutableStateOf(TextFieldValue()) }
+    var doseReforcoState by remember { mutableStateOf("") }
     var obsState by remember { mutableStateOf(TextFieldValue()) }
     var lembreteState by remember { mutableStateOf(false) }
     val context = LocalContext.current
@@ -79,7 +86,7 @@ fun AddMedicacoesScreen() {
             text = "Adiconar Medicação ou Vacina para :",
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
-                .padding(top = 80.dp),
+                .padding(top = 80.dp, bottom = 15.dp),
             fontSize = 22.sp,
             color = RosaPrincipal
         )
@@ -136,13 +143,12 @@ fun AddMedicacoesScreen() {
                 .align(Alignment.CenterHorizontally)
         )
 
-        CustomTextField(
-            value = doseReforcoState,
-            onValueChange = { doseReforcoState = it },
-            placeholderText = "Dose de Reforço (em meses)",
+        CustomDatePicker(
+            label = "Data de reforço",
+            selectedDate = doseReforcoState,
+            onDateSelected = { doseReforcoState = it.text },
             modifier = Modifier
-                .align(Alignment.CenterHorizontally),
-            keyboardType = KeyboardType.Text
+                .align(Alignment.CenterHorizontally)
         )
 
         CustomTextField(
@@ -154,9 +160,44 @@ fun AddMedicacoesScreen() {
             keyboardType = KeyboardType.Text
         )
 
+        //switch para lembrete
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 40.dp, vertical = 15.dp)
+                .align(Alignment.CenterHorizontally),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = "Ativar lembrete",
+                fontSize = 18.sp
+            )
+            Switch(
+                checked = lembreteState,
+                onCheckedChange = { lembreteState = it },
+                colors = SwitchDefaults.colors(
+                    checkedThumbColor = AzulFontes,
+                    uncheckedThumbColor = CinzaContainersClaro,
+                    checkedTrackColor = RosaPrincipal,
+                    uncheckedTrackColor = CinzaContainersEscuro
+                )
+            )
+        }
+
         CustomButton(
             onClickAction = {
-
+                /*MedRepository.addMedicamento(
+                    idPet = id_pet,
+                    idTutor1 = id_tutor,
+                    idTutor2 = id_tutor2,
+                    nome = nomeState.text,
+                    tipo = tipoState,
+                    dataString = dataState,
+                    doseReforcoString = doseReforcoState,
+                    observacoes = obsState.text,
+                    lembrete = lembreteState,
+                    context = context
+                )*/
             },
             modifier = Modifier
                 .align(Alignment.CenterHorizontally),

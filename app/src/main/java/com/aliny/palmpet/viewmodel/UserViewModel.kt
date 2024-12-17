@@ -12,6 +12,8 @@ class UserViewModel : ViewModel() {
 
     val _userData = MutableLiveData<Usuario?>()
     val userData: LiveData<Usuario?> get() = _userData
+    val _thirdUserData = MutableLiveData<Usuario?>() //LiveData para dados de terceiros
+    val thirdUserData: LiveData<Usuario?> get() = _thirdUserData //exposição pública do LiveData de terceiro
     val _userList = MutableLiveData<List<Usuario>>()
     val userList: LiveData<List<Usuario>> get() = _userList
 
@@ -48,6 +50,23 @@ class UserViewModel : ViewModel() {
             }
             .addOnFailureListener {
                 _userData.postValue(null)
+            }
+    }
+
+    //carregar dados de um usuário terceiro
+    fun loadUserById(uid: String) {
+        val db = Firebase.firestore
+        db.collection("usuarios").document(uid).get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    val usuario = document.toObject(Usuario::class.java)
+                    _thirdUserData.postValue(usuario) //atualiza os dados
+                } else {
+                    _thirdUserData.postValue(null) //caso o usuário não exista
+                }
+            }
+            .addOnFailureListener {
+                _thirdUserData.postValue(null) //caso haja erro na busca
             }
     }
 

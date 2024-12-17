@@ -202,6 +202,29 @@ object UserRepository {
         }
     }
 
+    fun getUserById(uid: String, context: Context, onSuccess: (Usuario?) -> Unit, onFailure: (Exception) -> Unit) {
+        db.collection("usuarios")
+            .document(uid)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    //os dados do documento e convertemos para um objeto Usuario
+                    val usuario = document.toObject(Usuario::class.java)
+                    onSuccess(usuario) //retorna o usuário
+                } else {
+                    //usuário não encontrado
+                    Toast.makeText(context, "Usuário não encontrado", Toast.LENGTH_SHORT).show()
+                    onSuccess(null) //retorna null se não encontrar
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e("UserRepository", "Erro ao obter dados do usuário", e)
+                Toast.makeText(context, "Erro ao obter dados do usuário: ${e.message}", Toast.LENGTH_SHORT).show()
+                onFailure(e) //retorna o erro
+            }
+    }
+
+
     fun updateUserEmail(
         uid_user: String,
         newEmail: String,

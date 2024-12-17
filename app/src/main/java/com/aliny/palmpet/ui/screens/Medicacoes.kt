@@ -6,14 +6,19 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Icon
 import androidx.compose.material.Surface
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -55,30 +60,30 @@ fun MedicacoesScreen() {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 50.dp),
-            verticalAlignment = Alignment.CenterVertically
+                .padding(top = 40.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
                 text = "Medicações e Vacinas",
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 color = AzulFontes,
-                modifier = Modifier.weight(1f)
-            )
-            Text(
-                text = "+",
-                fontSize = 40.sp,
-                fontWeight = FontWeight.Bold,
-                color = AzulFontes,
                 modifier = Modifier
-                    .padding(vertical = 25.dp)
+                    .padding(start = 16.dp)
+            )
+            Icon(
+                imageVector = Icons.Filled.Add,
+                contentDescription = "Adicionar Medicação",
+                tint = AzulFontes,
+                modifier = Modifier
+                    .size(50.dp)
                     .clickable {
                         val intent = Intent(context, AdicionarMedicacao::class.java)
                         context.startActivity(intent)
                     }
             )
         }
-
     }
 }
 

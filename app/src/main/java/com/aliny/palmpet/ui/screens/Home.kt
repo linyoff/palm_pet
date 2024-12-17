@@ -104,7 +104,7 @@ fun BotoesDeAcao() {
     Row(
         modifier = Modifier
             .fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(16.dp)
+        horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterHorizontally)
     ) {
         ActionButton(
             text = "Procurar veterinários",

@@ -20,7 +20,7 @@ data class Pet(
     var data_cio: Timestamp? = Timestamp.now(),
     var imageUrl: String? = null
 ) {
-    // Construtor padrão sem argumentos
+    //construtor padrão sem argumentos
     constructor() : this("", "", null, "", Timestamp.now(), "", "", false, 0.0f, "", "", "", null, null, null, null)
 
     override fun toString(): String {

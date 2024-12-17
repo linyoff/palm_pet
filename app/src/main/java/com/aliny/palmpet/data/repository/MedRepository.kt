@@ -3,6 +3,7 @@ package com.aliny.palmpet.data.repository
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
+import com.aliny.palmpet.data.model.Medicacao
 import com.aliny.palmpet.util.ValidationUtils
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.ktx.firestore
@@ -25,15 +26,13 @@ object MedRepository {
         doseReforcoString: String,
         observacoes: String,
         lembrete: Boolean,
-        context: Context,
-        onSuccess: () -> Unit,
-        onFailure: () -> Unit
+        context: Context
     ) {
         try {
             ValidationUtils.validarCampo(nome, "nome")
             ValidationUtils.validarCampo(tipo, "tipo")
 
-            val idMedicamento = UUID.randomUUID().toString()
+            val idMedicacao = UUID.randomUUID().toString()
 
             //conversão de datas
             val dateFormat = SimpleDateFormat("dd/MM/yyyy")
@@ -47,7 +46,7 @@ object MedRepository {
             }
 
             val medicamento = hashMapOf(
-                "id_medicamento" to idMedicamento,
+                "id_medicacao" to idMedicacao,
                 "id_pet" to idPet,
                 "id_tutor1" to idTutor1,
                 "id_tutor2" to idTutor2,
@@ -60,23 +59,66 @@ object MedRepository {
             )
 
             //adicionando medicamento ao Firestore
-            db.collection("medicamentos")
-                .document(idMedicamento)
+            db.collection("medicacoes")
+                .document(idMedicacao)
                 .set(medicamento)
                 .addOnSuccessListener {
-                    Log.i("TESTE", "Medicamento adicionado com sucesso!")
-                    Toast.makeText(context, "Medicamento adicionado com sucesso!", Toast.LENGTH_SHORT).show()
-                    onSuccess()
+                    Log.i("TESTE", "Medicação adicionada com sucesso!")
+                    Toast.makeText(context, "Medicacão adicionada com sucesso!", Toast.LENGTH_SHORT).show()
                 }
                 .addOnFailureListener { e ->
-                    Log.e("TESTE", "Erro ao adicionar medicamento", e)
-                    Toast.makeText(context, "Erro ao adicionar medicamento no Firestore: ${e.message}", Toast.LENGTH_SHORT).show()
-                    onFailure()
+                    Log.e("TESTE", "Erro ao adicionar medicação", e)
+                    Toast.makeText(context, "Erro ao adicionar medicação no Firestore: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
 
         } catch (e: Exception) {
             Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
-            onFailure()
         }
     }
+
+    fun getMedicacoesForPet(
+        petId: String,
+        onSuccess: (List<Medicacao>) -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        db.collection("medicacoes")
+            .whereEqualTo("id_pet", petId)
+            .get()
+            .addOnSuccessListener { result ->
+                val medicacoesList = mutableListOf<Medicacao>()
+                for (document in result) {
+                    val medicacao = document.toObject(Medicacao::class.java)
+                    medicacoesList.add(medicacao)
+                }
+                onSuccess(medicacoesList)  //função de sucesso com a lista de medicações
+            }
+            .addOnFailureListener { exception ->
+                Log.e("MedRepository", "Erro ao buscar medicações: ${exception.message}")
+                onFailure(exception)  //função de falha com a exceção
+            }
+    }
+
+    fun getMedicacaoById(
+        medicacaoId: String,
+        onSuccess: (Medicacao?) -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        db.collection("medicacoes")
+            .document(medicacaoId)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    val medicacao = document.toObject(Medicacao::class.java)
+                    onSuccess(medicacao)  //função de sucesso com a medicação encontrada
+                } else {
+                    onSuccess(null)  //se a medicação não existir
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.e("MedRepository", "Erro ao buscar medicação: ${exception.message}")
+                onFailure(exception)  //função de falha com a exceção
+            }
+    }
+
+
 }
