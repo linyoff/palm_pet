@@ -44,7 +44,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
@@ -52,14 +51,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberImagePainter
-import com.aliny.palmpet.R
 import com.aliny.palmpet.data.repository.PetRepository
 import com.aliny.palmpet.ui.components.CustomButton
 import com.aliny.palmpet.ui.components.CustomDatePicker
-import com.aliny.palmpet.ui.components.CustomOutlinedTextField
+import com.aliny.palmpet.ui.components.CustomTextField
 import com.aliny.palmpet.ui.theme.CinzaContainersClaro
 import com.aliny.palmpet.ui.theme.PalmPetTheme
-import com.aliny.palmpet.ui.theme.RosaPrincipal
 import com.aliny.palmpet.viewmodel.PetViewModel
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -217,7 +214,7 @@ fun EditPetProfileScreen(petViewModel: PetViewModel = viewModel()) {
         }
 
 
-        CustomOutlinedTextField(
+        CustomTextField(
             value = nomeState,
             onValueChange = { nomeState = it },
             placeholderText = "Nome",
@@ -265,7 +262,7 @@ fun EditPetProfileScreen(petViewModel: PetViewModel = viewModel()) {
             }
         }
 
-        CustomOutlinedTextField(
+        CustomTextField(
             value = racaState,
             onValueChange = { racaState = it },
             placeholderText = "Raça",
@@ -392,7 +389,7 @@ fun EditPetProfileScreen(petViewModel: PetViewModel = viewModel()) {
             }
         }
 
-        CustomOutlinedTextField(
+        CustomTextField(
             value = pesoState,
             onValueChange = { pesoState = it },
             placeholderText = "Peso",
@@ -400,7 +397,7 @@ fun EditPetProfileScreen(petViewModel: PetViewModel = viewModel()) {
             keyboardType = KeyboardType.Number
         )
 
-        CustomOutlinedTextField(
+        CustomTextField(
             value = corState,
             onValueChange = { corState = it },
             placeholderText = "Cor",

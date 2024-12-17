@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
@@ -20,7 +19,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.aliny.palmpet.data.repository.UserRepository
 import com.aliny.palmpet.ui.components.CustomButton
-import com.aliny.palmpet.ui.components.CustomOutlinedTextField
+import com.aliny.palmpet.ui.components.CustomTextField
 import com.aliny.palmpet.ui.theme.PalmPetTheme
 import com.aliny.palmpet.viewmodel.UserViewModel
 
@@ -61,7 +60,7 @@ fun EditEmailScreen(
             fontSize = 22.sp,
         )
 
-        CustomOutlinedTextField(
+        CustomTextField(
             value = newEmail,
             onValueChange = { newEmail = it },
             placeholderText = "Novo E-mail",
@@ -69,7 +68,7 @@ fun EditEmailScreen(
             keyboardType = KeyboardType.Email
         )
 
-        CustomOutlinedTextField(
+        CustomTextField(
             value = password,
             onValueChange = { password = it },
             placeholderText = "Senha",

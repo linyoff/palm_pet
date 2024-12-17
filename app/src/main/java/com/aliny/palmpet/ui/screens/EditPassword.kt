@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aliny.palmpet.data.repository.UserRepository
 import com.aliny.palmpet.ui.components.CustomButton
-import com.aliny.palmpet.ui.components.CustomOutlinedTextField
+import com.aliny.palmpet.ui.components.CustomTextField
 import com.aliny.palmpet.ui.theme.PalmPetTheme
 
 class EditPassword : ComponentActivity() {
@@ -56,7 +56,7 @@ fun EditPasswordScreen() {
         )
 
         //senha atual
-        CustomOutlinedTextField(
+        CustomTextField(
             value = currentPassword,
             onValueChange = { currentPassword = it },
             placeholderText = "Senha Atual",
@@ -66,7 +66,7 @@ fun EditPasswordScreen() {
         )
 
         //nova senha
-        CustomOutlinedTextField(
+        CustomTextField(
             value = newPassword,
             onValueChange = { newPassword = it },
             placeholderText = "Nova Senha",
@@ -76,7 +76,7 @@ fun EditPasswordScreen() {
         )
 
         //confirmar a nova senha
-        CustomOutlinedTextField(
+        CustomTextField(
             value = confirmPassword,
             onValueChange = { confirmPassword = it },
             placeholderText = "Confirmar Nova Senha",

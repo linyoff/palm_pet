@@ -19,7 +19,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.OutlinedTextField
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -47,7 +46,7 @@ import com.aliny.palmpet.R
 import com.aliny.palmpet.data.repository.PetRepository
 import com.aliny.palmpet.ui.components.CustomButton
 import com.aliny.palmpet.ui.components.CustomDatePicker
-import com.aliny.palmpet.ui.components.CustomOutlinedTextField
+import com.aliny.palmpet.ui.components.CustomTextField
 import com.aliny.palmpet.ui.components.ImagePicker
 import com.aliny.palmpet.ui.theme.CinzaContainersClaro
 import com.aliny.palmpet.ui.theme.PalmPetTheme
@@ -123,7 +122,7 @@ fun TeladeCadastroPet(userViewModel: UserViewModel) {
             fontSize = 22.sp,
             color = RosaPrincipal
         )
-        CustomOutlinedTextField(
+        CustomTextField(
             value = nomeState,
             onValueChange = { nomeState = it },
             placeholderText = "Nome",
@@ -174,7 +173,7 @@ fun TeladeCadastroPet(userViewModel: UserViewModel) {
             }
         }
 
-        CustomOutlinedTextField(
+        CustomTextField(
             value = racaState,
             onValueChange = { racaState = it },
             placeholderText = "Raça",
@@ -307,7 +306,7 @@ fun TeladeCadastroPet(userViewModel: UserViewModel) {
             }
         }
 
-        CustomOutlinedTextField(
+        CustomTextField(
             value = pesoState,
             onValueChange = { pesoState = it },
             placeholderText = "Peso",
@@ -316,7 +315,7 @@ fun TeladeCadastroPet(userViewModel: UserViewModel) {
             keyboardType = KeyboardType.Number
         )
 
-        CustomOutlinedTextField(
+        CustomTextField(
             value = corState,
             onValueChange = { corState = it },
             placeholderText = "Cor",

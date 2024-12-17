@@ -19,7 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
-import com.aliny.palmpet.ui.components.CustomOutlinedTextField
+import com.aliny.palmpet.ui.components.CustomTextField
 import com.aliny.palmpet.ui.theme.PalmPetTheme
 import com.aliny.palmpet.viewmodel.UserViewModel
 
@@ -34,7 +34,7 @@ fun Search(userViewModel: UserViewModel = viewModel()) {
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        CustomOutlinedTextField(
+        CustomTextField(
             value = searchText,
             onValueChange = {
                 searchText = it

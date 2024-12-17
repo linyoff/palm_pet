@@ -34,7 +34,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberImagePainter
 import com.aliny.palmpet.data.repository.UserRepository
 import com.aliny.palmpet.ui.components.CustomButton
-import com.aliny.palmpet.ui.components.CustomOutlinedTextField
+import com.aliny.palmpet.ui.components.CustomTextField
 import com.aliny.palmpet.ui.theme.AzulFontes
 import com.aliny.palmpet.ui.theme.CinzaContainersClaro
 import com.aliny.palmpet.ui.theme.PalmPetTheme
@@ -164,7 +164,7 @@ fun EditProfile(userViewModel: UserViewModel = viewModel()) {
             color = AzulFontes
         )
 
-        CustomOutlinedTextField(
+        CustomTextField(
             value = nome,
             onValueChange = { nome = it },
             placeholderText = "Nome completo",
@@ -172,7 +172,7 @@ fun EditProfile(userViewModel: UserViewModel = viewModel()) {
             keyboardType = KeyboardType.Text
         )
 
-        CustomOutlinedTextField(
+        CustomTextField(
             value = nomeUsuario,
             onValueChange = { nomeUsuario = it },
             placeholderText = "Nome de usuário",
@@ -180,7 +180,7 @@ fun EditProfile(userViewModel: UserViewModel = viewModel()) {
             keyboardType = KeyboardType.Text
         )
 
-        CustomOutlinedTextField(
+        CustomTextField(
             value = dataNascimento,
             onValueChange = { dataNascimento = it },
             placeholderText = "Data de nascimento",
@@ -188,7 +188,7 @@ fun EditProfile(userViewModel: UserViewModel = viewModel()) {
             keyboardType = KeyboardType.Text
         )
 
-        CustomOutlinedTextField(
+        CustomTextField(
             value = telefone,
             onValueChange = { telefone = it },
             placeholderText = "Telefone",

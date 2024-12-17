@@ -3,27 +3,16 @@ package com.aliny.palmpet.ui.screens
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.AddPhotoAlternate
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,11 +22,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
@@ -54,7 +41,7 @@ import com.aliny.palmpet.ui.components.CustomButton
 import com.aliny.palmpet.ui.theme.PalmPetTheme
 import com.aliny.palmpet.ui.theme.RosaPrincipal
 import com.aliny.palmpet.ui.components.CustomDatePicker
-import com.aliny.palmpet.ui.components.CustomOutlinedTextField
+import com.aliny.palmpet.ui.components.CustomTextField
 import com.aliny.palmpet.ui.components.ImagePicker
 
 
@@ -113,7 +100,7 @@ fun TeladeCadastro() {
             fontSize = 22.sp,
             color = RosaPrincipal
         )
-        CustomOutlinedTextField(
+        CustomTextField(
             value = nomeState,
             onValueChange = { nomeState = it },
             placeholderText = "Nome completo",
@@ -124,7 +111,7 @@ fun TeladeCadastro() {
             onImeAction = { focusRequester2.requestFocus() }
         )
 
-        CustomOutlinedTextField(
+        CustomTextField(
             value = nomeUsuarioState,
             onValueChange = {
                 if(it.text.length<=50){ nomeUsuarioState = it }
@@ -146,7 +133,7 @@ fun TeladeCadastro() {
                 .align(Alignment.CenterHorizontally)
         )
 
-        CustomOutlinedTextField(
+        CustomTextField(
             value = telefoneState,
             onValueChange = {
                 //limitar o comprimento ao número de dígitos do telefone sem a máscara
@@ -164,7 +151,7 @@ fun TeladeCadastro() {
         )
 
 
-        CustomOutlinedTextField(value = emailState,
+        CustomTextField(value = emailState,
             onValueChange = { emailState = it },
             placeholderText = "Email",
             modifier = Modifier
@@ -174,7 +161,7 @@ fun TeladeCadastro() {
             onImeAction = { focusRequester5.requestFocus() }
         )
 
-        CustomOutlinedTextField(
+        CustomTextField(
             value = senhaState,
             onValueChange = { senhaState = it },
             placeholderText = "Senha",

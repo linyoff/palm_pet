@@ -15,4 +15,5 @@
     <string name="title_activity_historico">Historico</string>
     <string name="title_activity_adicionar_medicacao">AdicionarMedicacao</string>
     <string name="title_activity_agendar_compromisso">AgendarCompromisso</string>
+    <string name="title_activity_public_user_profile">PublicUserProfile</string>
 </resources>

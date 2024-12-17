@@ -42,7 +42,7 @@ import com.aliny.palmpet.R
 import com.aliny.palmpet.data.auth.AuthService
 import com.aliny.palmpet.ui.theme.AzulFontes
 import com.aliny.palmpet.ui.components.CustomButton
-import com.aliny.palmpet.ui.components.CustomOutlinedTextField
+import com.aliny.palmpet.ui.components.CustomTextField
 import com.aliny.palmpet.ui.theme.PalmPetTheme
 import com.aliny.palmpet.ui.theme.RosaPrincipal
 
@@ -101,7 +101,7 @@ fun LoginScreen() {
             fontSize = 20.sp,
             color = RosaPrincipal
         )
-        CustomOutlinedTextField(
+        CustomTextField(
             value = emailState,
             onValueChange = {emailState = it},
             placeholderText = "Email",
@@ -111,7 +111,7 @@ fun LoginScreen() {
             keyboardType = KeyboardType.Text,
             onImeAction = { focusRequester2.requestFocus() }
         )
-        CustomOutlinedTextField(
+        CustomTextField(
             value = senhaState,
             onValueChange = {senhaState = it},
             placeholderText = "Senha",
