@@ -207,8 +207,8 @@ fun EditProfile(userViewModel: UserViewModel = viewModel()) {
             onClickAction = {
                 userData?.let {
                     UserRepository.updateUser(
-                        uid_user = it.id_usuario,
-                        nome_usuario = nomeUsuario.text,
+                        uidUuser = it.id_usuario,
+                        nomeUsuario = nomeUsuario.text,
                         nome = nome.text,
                         dataNascimento = dataNascimento.text,
                         telefone = telefone.text,

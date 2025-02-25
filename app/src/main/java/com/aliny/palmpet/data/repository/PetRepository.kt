@@ -1,6 +1,7 @@
 package com.aliny.palmpet.data.repository
 
 import Usuario
+import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
 import android.util.Log
@@ -18,9 +19,11 @@ import java.util.UUID
 
 object PetRepository {
 
+    @SuppressLint("StaticFieldLeak")
     val db = Firebase.firestore
-    val storage = Firebase.storage
+    private val storage = Firebase.storage
 
+    @SuppressLint("SimpleDateFormat")
     fun addPet(
         userData: Usuario,
         nome: String,
@@ -31,9 +34,9 @@ object PetRepository {
         peso: Float,
         sexo: String,
         cor: String,
-        tipo_pelagem: String,
-        ja_cruzou: Boolean?,
-        teve_filhote: Boolean?,
+        tipoPelagem: String,
+        jaCruzou: Boolean?,
+        teveFilhote: Boolean?,
         dataCioString: String,
         imageUri: Uri?, //parâmetro para a URI da imagem
         context: Context,
@@ -46,43 +49,43 @@ object PetRepository {
             ValidationUtils.validarCampo(raca, "raca")
             ValidationUtils.validarCampo(sexo, "sexo")
             ValidationUtils.validarCampo(cor, "cor")
-            ValidationUtils.validarCampo(tipo_pelagem, "tipo_pelagem")
+            ValidationUtils.validarCampo(tipoPelagem, "tipo_pelagem")
 
-            val id_pet = UUID.randomUUID().toString()
-            val id_tutor1 = userData.id_usuario
+            val idPet = UUID.randomUUID().toString()
+            val idTutor1 = userData.id_usuario
 
             val dateFormat = SimpleDateFormat("dd/MM/yyyy")
             val data1 = dateFormat.parse(dataNascString)
-            val data_nascimento = Timestamp(Date(data1.time))
-            var data_cio: Timestamp? = null
+            val dataNasc = Timestamp(Date(data1!!.time))
+            var dataCio: Timestamp? = null
             if (dataCioString != "") {
                 val data2 = dateFormat.parse(dataCioString)
-                data_cio = Timestamp(Date(data2.time))
+                dataCio = Timestamp(Date(data2!!.time))
             }
 
             //fazer o upload da imagem
             fun uploadImageAndSavePet(imageUri: Uri?) {
                 if (imageUri != null) {
-                    val storageRef = storage.reference.child("pets/$id_pet.jpg")
+                    val storageRef = storage.reference.child("pets/$idPet.jpg")
                     storageRef.putFile(imageUri)
-                        .addOnSuccessListener { taskSnapshot ->
+                        .addOnSuccessListener { _ ->
                             storageRef.downloadUrl.addOnSuccessListener { uri ->
                                 val pet = Pet(
-                                    id_pet,
-                                    id_tutor1,
+                                    idPet,
+                                    idTutor1,
                                     null,
                                     nome,
-                                    data_nascimento,
+                                    dataNasc,
                                     especie,
                                     raca,
                                     castrado,
                                     peso,
                                     sexo,
                                     cor,
-                                    tipo_pelagem,
-                                    ja_cruzou,
-                                    teve_filhote,
-                                    data_cio,
+                                    tipoPelagem,
+                                    jaCruzou,
+                                    teveFilhote,
+                                    dataCio,
                                     uri.toString() //salvar a URL da imagem no Firestore
                                 )
 
@@ -108,21 +111,21 @@ object PetRepository {
                         }
                 } else {
                     val pet = Pet(
-                        id_pet,
-                        id_tutor1,
+                        idPet,
+                        idTutor1,
                         null,
                         nome,
-                        data_nascimento,
+                        dataNasc,
                         especie,
                         raca,
                         castrado,
                         peso,
                         sexo,
                         cor,
-                        tipo_pelagem,
-                        ja_cruzou,
-                        teve_filhote,
-                        data_cio
+                        tipoPelagem,
+                        jaCruzou,
+                        teveFilhote,
+                        dataCio
                     )
 
                     db.collection("pets")
@@ -206,7 +209,7 @@ object PetRepository {
                     val imageUrl = pet?.imageUrl //url da imagem
 
                     //excluindo a imagem primeiro
-                    if (imageUrl != null && imageUrl.isNotEmpty()) {
+                    if (!imageUrl.isNullOrEmpty()) {
                         val storageRef = storage.getReferenceFromUrl(imageUrl)
                         storageRef.delete()
                             .addOnSuccessListener {
@@ -234,7 +237,7 @@ object PetRepository {
             }
     }
 
-    fun deletePetFromFirestore(
+    private fun deletePetFromFirestore(
         petId: String,
         context: Context,
         onSuccess: () -> Unit,
@@ -255,6 +258,7 @@ object PetRepository {
             }
     }
 
+    @SuppressLint("SimpleDateFormat")
     fun updatePet(
         petId: String,
         nome: String,
@@ -265,9 +269,9 @@ object PetRepository {
         peso: Float,
         sexo: String,
         cor: String,
-        tipo_pelagem: String,
-        ja_cruzou: Boolean?,
-        teve_filhote: Boolean?,
+        tipoPelagem: String,
+        jaCruzou: Boolean?,
+        teveFilhote: Boolean?,
         dataCioString: String,
         imageUri: Uri?, //parâmetro para a URI da imagem
         context: Context
@@ -278,17 +282,17 @@ object PetRepository {
             ValidationUtils.validarCampo(raca, "raca")
             ValidationUtils.validarCampo(sexo, "sexo")
             ValidationUtils.validarCampo(cor, "cor")
-            ValidationUtils.validarCampo(tipo_pelagem, "tipo_pelagem")
+            ValidationUtils.validarCampo(tipoPelagem, "tipo_pelagem")
 
             //convertendo datas para timestamp
             val dateFormat = SimpleDateFormat("dd/MM/yyyy")
             val dataNasc = dateFormat.parse(dataNascString)
-            val dataNascimento = Timestamp(Date(dataNasc.time))
+            val dataNascimento = Timestamp(Date(dataNasc!!.time))
 
             var dataCio: Timestamp? = null
             if (dataCioString.isNotEmpty()) {
                 val dataCioParsed = dateFormat.parse(dataCioString)
-                dataCio = Timestamp(Date(dataCioParsed.time))
+                dataCio = Timestamp(Date(dataCioParsed!!.time))
             }
 
             //atualiza os dados do pet no Firestore
@@ -302,11 +306,11 @@ object PetRepository {
                     "peso" to peso,
                     "sexo" to sexo,
                     "cor" to cor,
-                    "tipo_pelagem" to tipo_pelagem
+                    "tipo_pelagem" to tipoPelagem
                 )
 
-                ja_cruzou?.let { updatedData["ja_cruzou"] = it }
-                teve_filhote?.let { updatedData["teve_filhote"] = it }
+                jaCruzou?.let { updatedData["ja_cruzou"] = it }
+                teveFilhote?.let { updatedData["teve_filhote"] = it }
                 dataCio?.let { updatedData["data_cio"] = it }
                 imageUrl?.let { updatedData["imageUrl"] = it }
 

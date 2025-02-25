@@ -1,5 +1,6 @@
 package com.aliny.palmpet.data.repository
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
@@ -14,8 +15,10 @@ import java.util.UUID
 
 object MedRepository {
 
+    @SuppressLint("StaticFieldLeak")
     val db = Firebase.firestore
 
+    @SuppressLint("SimpleDateFormat")
     fun addMedicamento(
         idPet: String,
         idTutor1: String,
@@ -37,12 +40,12 @@ object MedRepository {
             //conversão de datas
             val dateFormat = SimpleDateFormat("dd/MM/yyyy")
             val data1 = dateFormat.parse(dataString)
-            val data = Timestamp(Date(data1.time))
+            val data = Timestamp(Date(data1!!.time))
 
             var doseReforco: Timestamp? = null
             if (doseReforcoString.isNotEmpty()) {
                 val data2 = dateFormat.parse(doseReforcoString)
-                doseReforco = Timestamp(Date(data2.time))
+                doseReforco = Timestamp(Date(data2!!.time))
             }
 
             val medicamento = hashMapOf(
@@ -120,6 +123,7 @@ object MedRepository {
             }
     }
 
+    @SuppressLint("SimpleDateFormat")
     fun updateMedicamento(
         idMedicacao: String,
         nome: String? = null,

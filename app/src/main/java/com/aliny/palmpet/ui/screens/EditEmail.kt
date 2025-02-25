@@ -90,7 +90,7 @@ fun EditEmailScreen(
             onClickAction = {
                 userData?.let { user ->
                     UserRepository.updateUserEmail(
-                        uid_user = user.id_usuario,
+                        uidUser = user.id_usuario,
                         newEmail = newEmail.text,
                         password = password.text,
                         context = context

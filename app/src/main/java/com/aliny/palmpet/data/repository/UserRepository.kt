@@ -3,6 +3,7 @@
 package com.aliny.palmpet.data.repository
 
 import Usuario
+import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
 import android.util.Log
@@ -19,11 +20,13 @@ import java.text.SimpleDateFormat
 import java.util.Date
 
 object UserRepository {
+    @SuppressLint("StaticFieldLeak")
     val db = Firebase.firestore
-    val storage = Firebase.storage
+    private val storage = Firebase.storage
 
+    @SuppressLint("SimpleDateFormat")
     fun setUser(
-        nome_usuario: String,
+        nomeUsuario: String,
         nome: String,
         dataNascimento: String,
         telefone: String,
@@ -34,7 +37,7 @@ object UserRepository {
     ) {
         try {
             //validações dos campos de entrada
-            ValidationUtils.validarCampo(nome_usuario, "nome_usuario")
+            ValidationUtils.validarCampo(nomeUsuario, "nome_usuario")
             ValidationUtils.validarCampo(nome, "nome")
             ValidationUtils.validarCampo(dataNascimento, "data_nascimento")
             ValidationUtils.validarCampo(telefone, "telefone")
@@ -43,7 +46,7 @@ object UserRepository {
 
             //verifica se o nome de usuário já existe
             db.collection("usuarios")
-                .whereEqualTo("nome_usuario", nome_usuario)
+                .whereEqualTo("nome_usuario", nomeUsuario)
                 .get()
                 .addOnSuccessListener { documents ->
                     if (!documents.isEmpty) {
@@ -53,7 +56,7 @@ object UserRepository {
                         //convertendo dataNascimento para Timestamp do Firebase
                         val dateFormat = SimpleDateFormat("dd/MM/yyyy")
                         val data = dateFormat.parse(dataNascimento)
-                        val timestamp = Timestamp(Date(data.time))
+                        val timestamp = Timestamp(Date(data!!.time))
 
                         //criação do usuário no Firebase Authentication
                         AuthService.criarUsuarioComEmailESenha(email, senha) { success, userId ->
@@ -63,12 +66,12 @@ object UserRepository {
                                     if (imageUri != null) {
                                         val storageRef = storage.reference.child("usuarios/$userId.jpg")
                                         storageRef.putFile(imageUri)
-                                            .addOnSuccessListener { taskSnapshot ->
+                                            .addOnSuccessListener { _ ->
                                                 storageRef.downloadUrl.addOnSuccessListener { uri ->
                                                     //criação do usuário no Firestore com a URL da imagem
                                                     val usuario = Usuario(
                                                         userId,
-                                                        nome_usuario,
+                                                        nomeUsuario,
                                                         nome,
                                                         timestamp,
                                                         telefone,
@@ -96,7 +99,7 @@ object UserRepository {
                                             }
                                     } else {
                                         //criação do usuário no Firestore sem imagem
-                                        val usuario = Usuario(userId, nome_usuario, nome, timestamp, telefone, email)
+                                        val usuario = Usuario(userId, nomeUsuario, nome, timestamp, telefone, email)
 
                                         db.collection("usuarios")
                                             .document(userId)
@@ -132,9 +135,10 @@ object UserRepository {
         }
     }
 
+    @SuppressLint("SimpleDateFormat")
     fun updateUser(
-        uid_user: String,
-        nome_usuario: String,
+        uidUuser: String,
+        nomeUsuario: String,
         nome: String,
         dataNascimento: String,
         telefone: String,
@@ -143,7 +147,7 @@ object UserRepository {
     ){
         try {
             //validações dos campos de entrada
-            ValidationUtils.validarCampo(nome_usuario, "nome_usuario")
+            ValidationUtils.validarCampo(nomeUsuario, "nome_usuario")
             ValidationUtils.validarCampo(nome, "nome")
             ValidationUtils.validarCampo(dataNascimento, "data_nascimento")
             ValidationUtils.validarCampo(telefone, "telefone")
@@ -151,12 +155,12 @@ object UserRepository {
             //convertendo dataNascimento para timestamp
             val dateFormat = SimpleDateFormat("dd/MM/yyyy")
             val data = dateFormat.parse(dataNascimento)
-            val timestamp = Timestamp(Date(data.time))
+            val timestamp = Timestamp(Date(data!!.time))
 
             //função para atualizar os dados do usuário no Firestore
             fun updateUserData(imageUrl: String?) {
                 val updatedData = mutableMapOf<String, Any>(
-                    "nome_usuario" to nome_usuario,
+                    "nome_usuario" to nomeUsuario,
                     "nome" to nome,
                     "dataNascimento" to timestamp,
                     "telefone" to telefone
@@ -167,7 +171,7 @@ object UserRepository {
 
                 //atualizando os dados do usuário no Firestore
                 db.collection("usuarios")
-                    .document(uid_user)
+                    .document(uidUuser)
                     .update(updatedData)
                     .addOnSuccessListener {
                         Toast.makeText(context, "Usuário atualizado com sucesso!", Toast.LENGTH_SHORT).show()
@@ -180,7 +184,7 @@ object UserRepository {
 
             //verificando se tem uma nova imagem para upload
             if (imageUri != null) {
-                val storageRef = storage.reference.child("usuarios/$uid_user.jpg")
+                val storageRef = storage.reference.child("usuarios/$uidUuser.jpg")
                 storageRef.putFile(imageUri)
                     .addOnSuccessListener {
                         storageRef.downloadUrl.addOnSuccessListener { uri ->
@@ -228,7 +232,7 @@ object UserRepository {
 
 
     fun updateUserEmail(
-        uid_user: String,
+        uidUser: String,
         newEmail: String,
         password: String,
         context: Context
@@ -249,7 +253,7 @@ object UserRepository {
                     .addOnSuccessListener {
                         //atualizando no firestore
                         Firebase.firestore.collection("usuarios")
-                            .document(uid_user)
+                            .document(uidUser)
                             .update("email", newEmail)
                             .addOnSuccessListener {
                                 Toast.makeText(context, "Email atualizado com sucesso!", Toast.LENGTH_SHORT).show()
