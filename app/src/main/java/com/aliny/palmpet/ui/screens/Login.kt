@@ -6,13 +6,19 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -26,10 +32,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -128,17 +134,46 @@ fun LoginScreen() {
                 .align(Alignment.CenterHorizontally),
             text = "Login"
         )
-        Text(
-            text = "OU",
+
+        val googleIcon: Painter = painterResource(id = R.drawable.google_icon)
+        Button(
+            onClick = {
+
+            },
+            colors = ButtonDefaults.buttonColors(containerColor = Color.White),
             modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(bottom = 15.dp),
-            fontSize = 15.sp,
-            color = AzulFontes
-        )
+                .height(56.dp)
+                .border(
+                    width = 1.dp,
+                    color = Color.Gray,
+                    shape = RoundedCornerShape(28.dp)
+                )
+                .align(Alignment.CenterHorizontally),
+            shape = RoundedCornerShape(28.dp)
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                //icone do google
+                Image(
+                    painter = googleIcon,
+                    contentDescription = "Google Icon",
+                    modifier = Modifier
+                        .size(35.dp)
+                )
+                Text(
+                    text = "Login com o Google",
+                    color = Color.Black,
+                    fontSize = 16.sp
+                )
+            }
+        }
+
         Row (
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
+                .padding(top = 12.dp)
         ){
             Text(
                 text = "Ainda não possui uma conta?",
@@ -146,17 +181,21 @@ fun LoginScreen() {
                 modifier = Modifier
                     .padding(end = 10.dp)
             )
-            ClickableText(
-                text = AnnotatedString("Cadastre-se"),
+            Text(
+                text = "Cadastre-se",
+                fontSize = 15.sp,
                 style = TextStyle(color = AzulFontes),
-                onClick = {
-                    context.startActivity(Intent(context, TelaCadastro::class.java))
-                }
+                modifier = Modifier
+                    .padding(end = 10.dp)
+                    .clickable {
+                        context.startActivity(Intent(context, TelaCadastro::class.java))
+                    }
             )
         }
-
     }
 }
+
+
 
 @Preview(showBackground = true)
 @Composable

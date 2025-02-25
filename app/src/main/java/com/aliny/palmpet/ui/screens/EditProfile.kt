@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberImagePainter
 import com.aliny.palmpet.data.repository.UserRepository
+import com.aliny.palmpet.ui.components.BackButton
 import com.aliny.palmpet.ui.components.CustomButton
 import com.aliny.palmpet.ui.components.CustomTextField
 import com.aliny.palmpet.ui.theme.AzulFontes
@@ -108,6 +109,12 @@ fun EditProfile(userViewModel: UserViewModel = viewModel()) {
             .verticalScroll(rememberScrollState())
             .padding(horizontal = 16.dp)
     ) {
+
+        BackButton(
+            onBackClick = { (context as? ComponentActivity)?.finish() },
+            iconColor = AzulFontes,
+            iconSize = 45
+        )
 
         Spacer(modifier = Modifier.height(40.dp))
 

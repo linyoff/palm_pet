@@ -65,6 +65,19 @@ object AuthService {
             }
     }
 
-
+    fun loginComGoogle(context: Context, googleCredential: AuthCredential, onComplete: (Boolean) -> Unit) {
+        auth.signInWithCredential(googleCredential)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val intent = Intent(context, MainActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    context.startActivity(intent)
+                    onComplete(true)
+                } else {
+                    Log.e("LoginGoogle", "Erro ao logar com Google: ${task.exception?.message}")
+                    onComplete(false)
+                }
+            }
+    }
 
 }

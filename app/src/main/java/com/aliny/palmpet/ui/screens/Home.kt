@@ -102,10 +102,13 @@ fun Greeting(name: String) {
 
 @Composable
 fun BotoesDeAcao() {
+
+    val context = LocalContext.current
+
     Row(
         modifier = Modifier
             .fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterHorizontally)
+        horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.Start)
     ) {
         ActionButton(
             text = "Procurar veterinários",
@@ -121,7 +124,8 @@ fun BotoesDeAcao() {
             backgroundColor = CianoBotoes,
             iconResId = R.drawable.icon_compromisso,
             onClick = {
-
+                val intent = Intent(context, AgendarCompromisso::class.java)
+                context.startActivity(intent)
             },
             modifier = Modifier.size(130.dp)
         )

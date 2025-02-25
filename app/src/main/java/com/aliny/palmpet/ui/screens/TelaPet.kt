@@ -8,14 +8,18 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -39,7 +43,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import coil.compose.rememberImagePainter
+import coil.compose.rememberAsyncImagePainter
 import com.aliny.palmpet.R
 import com.aliny.palmpet.data.repository.PetRepository
 import com.aliny.palmpet.ui.components.ActionButton
@@ -87,9 +91,30 @@ fun TelaDoPet(petViewModel: PetViewModel = viewModel()) {
     Column (
         modifier = Modifier
             .fillMaxSize()
+            .padding(16.dp)
             .verticalScroll(rememberScrollState())
     ){
-        BotoesDeAcaoPet()
+        //ícone de voltar
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .padding(bottom = 16.dp, top = 30.dp)
+                .clickable {
+                    //finaliza a tela atual
+                    val activity = context as? ComponentActivity
+                    activity?.finish()
+                }
+        ) {
+            Icon(
+                imageVector = Icons.Filled.ArrowBack,
+                contentDescription = "Voltar",
+                tint = AzulFontes,
+                modifier = Modifier
+                    .size(45.dp)
+            )
+        }
+
+        BotoesDeAcaoPet(petId.toString())
         Button(
             onClick = {
                 val intent = Intent(context, EditPetProfile::class.java).apply {
@@ -126,7 +151,7 @@ fun TelaDoPet(petViewModel: PetViewModel = viewModel()) {
             ) {
                 pet?.let {
                     if (!it.imageUrl.isNullOrEmpty()) {
-                        val painter: Painter = rememberImagePainter(data = it.imageUrl)
+                        val painter: Painter = rememberAsyncImagePainter(model = it.imageUrl)
                         Image(
                             painter = painter,
                             contentDescription = "Foto do pet",
@@ -264,14 +289,14 @@ fun InfoCard(label: String, value: String) {
 }
 
 @Composable
-fun BotoesDeAcaoPet() {
+fun BotoesDeAcaoPet(pet_id : String) {
 
     val context = LocalContext.current
 
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 125.dp, bottom = 30.dp),
+            .padding(bottom = 30.dp),
         horizontalArrangement = Arrangement.Center
     ) {
         ActionButton(
@@ -279,7 +304,9 @@ fun BotoesDeAcaoPet() {
             backgroundColor = CianoBotoes,
             iconResId = R.drawable.icon_medicacoes,
             onClick = {
-                val intent = Intent(context, Medicacoes::class.java)
+                val intent = Intent(context, Medicacoes::class.java).apply {
+                    putExtra("pet_id", pet_id)
+                }
                 context.startActivity(intent)
             },
             modifier = Modifier

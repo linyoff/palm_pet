@@ -120,5 +120,58 @@ object MedRepository {
             }
     }
 
+    fun updateMedicamento(
+        idMedicacao: String,
+        nome: String? = null,
+        tipo: String? = null,
+        dataString: String? = null,
+        doseReforcoString: String? = null,
+        observacoes: String? = null,
+        lembrete: Boolean? = null,
+        context: Context
+    ) {
+        val updatedFields = mutableMapOf<String, Any>()
+
+        try {
+            nome?.let {
+                ValidationUtils.validarCampo(it, "nome")
+                updatedFields["nome"] = it
+            }
+            tipo?.let {
+                ValidationUtils.validarCampo(it, "tipo")
+                updatedFields["tipo"] = it
+            }
+            dataString?.let {
+                updatedFields["data"] = Timestamp(SimpleDateFormat("dd/MM/yyyy").parse(it)!!)
+            }
+            doseReforcoString?.let {
+                updatedFields["dose_reforco"] = Timestamp(SimpleDateFormat("dd/MM/yyyy").parse(it)!!)
+            }
+            observacoes?.let {
+                updatedFields["observacoes"] = it
+            }
+            lembrete?.let {
+                updatedFields["lembrete"] = it
+            }
+
+            if (updatedFields.isNotEmpty()) {
+                db.collection("medicacoes")
+                    .document(idMedicacao)
+                    .update(updatedFields)
+                    .addOnSuccessListener {
+                        Toast.makeText(context, "Medicação atualizada com sucesso!", Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e("MedRepository", "Erro ao atualizar medicação: ${e.message}", e)
+                        Toast.makeText(context, "Erro ao atualizar: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
+            } else {
+                Toast.makeText(context, "Nenhum campo foi alterado.", Toast.LENGTH_SHORT).show()
+            }
+        } catch (e: Exception) {
+            Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+        }
+    }
+
 
 }

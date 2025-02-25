@@ -18,7 +18,7 @@ class MedViewModel : ViewModel() {
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> get() = _error
 
-    //carrega as medicações do tutor pelo id do pet
+    //carrega as medicações pelo id do pet
     fun loadMedicacoesByPetId(petId: String) {
         MedRepository.getMedicacoesForPet(petId, { medicacaoList ->
             _medicacoes.value = medicacaoList

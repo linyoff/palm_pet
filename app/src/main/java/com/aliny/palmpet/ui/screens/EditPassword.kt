@@ -16,8 +16,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aliny.palmpet.data.repository.UserRepository
+import com.aliny.palmpet.ui.components.BackButton
 import com.aliny.palmpet.ui.components.CustomButton
 import com.aliny.palmpet.ui.components.CustomTextField
+import com.aliny.palmpet.ui.theme.AzulFontes
 import com.aliny.palmpet.ui.theme.PalmPetTheme
 
 class EditPassword : ComponentActivity() {
@@ -47,6 +49,12 @@ fun EditPasswordScreen() {
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
+        BackButton(
+            onBackClick = { (context as? ComponentActivity)?.finish() },
+            iconColor = AzulFontes,
+            iconSize = 45
+        )
+
         Text(
             text = "Alterar Senha",
             style = MaterialTheme.typography.titleLarge,

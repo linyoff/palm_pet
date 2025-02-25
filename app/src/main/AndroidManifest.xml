@@ -21,6 +21,11 @@
         android:theme="@style/Theme.PalmPet"
         tools:targetApi="31">
         <activity
+            android:name=".ui.screens.DetalhesMedicacao"
+            android:exported="false"
+            android:label="@string/title_activity_detalhes_medicacao"
+            android:theme="@style/Theme.PalmPet" />
+        <activity
             android:name=".ui.screens.PublicUserProfile"
             android:exported="false"
             android:label="@string/title_activity_public_user_profile"

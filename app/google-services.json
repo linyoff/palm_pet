@@ -12,7 +12,20 @@
           "package_name": "com.aliny.palmpet"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1024561691847-lpikqh9ic16avra4v056gmlm8heqid3q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aliny.palmpet",
+            "certificate_hash": "2ee82f20b2485fca102062ddfacbae06d75b003d"
+          }
+        },
+        {
+          "client_id": "1024561691847-59r3dii0gn0q20l1rm4a3d5nijk9qhsc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBQqVZ_Tap9ihEDvkLV_yzYH3K8S5vB4M8"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1024561691847-59r3dii0gn0q20l1rm4a3d5nijk9qhsc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

@@ -16,4 +16,6 @@
     <string name="title_activity_adicionar_medicacao">AdicionarMedicacao</string>
     <string name="title_activity_agendar_compromisso">AgendarCompromisso</string>
     <string name="title_activity_public_user_profile">PublicUserProfile</string>
+    <string name="your_web_client_id">1024561691847-59r3dii0gn0q20l1rm4a3d5nijk9qhsc.apps.googleusercontent.com</string>
+    <string name="title_activity_detalhes_medicacao">DetalhesMedicacao</string>
 </resources>

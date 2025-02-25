@@ -18,8 +18,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.aliny.palmpet.data.repository.UserRepository
+import com.aliny.palmpet.ui.components.BackButton
 import com.aliny.palmpet.ui.components.CustomButton
 import com.aliny.palmpet.ui.components.CustomTextField
+import com.aliny.palmpet.ui.theme.AzulFontes
 import com.aliny.palmpet.ui.theme.PalmPetTheme
 import com.aliny.palmpet.viewmodel.UserViewModel
 
@@ -52,6 +54,12 @@ fun EditEmailScreen(
             .padding(25.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
+        BackButton(
+            onBackClick = { (context as? ComponentActivity)?.finish() },
+            iconColor = AzulFontes,
+            iconSize = 45
+        )
+
         Text(
             text = "Alterar E-mail",
             style = MaterialTheme.typography.titleLarge,

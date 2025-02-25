@@ -9,27 +9,47 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e799d7ac-36fd-43d1-9a9f-2045d3af6c6f" name="Changes" comment="update pets">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/data/model/Medicacao.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/PublicUserProfile.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/viewmodel/MedViewModel.kt" afterDir="false" />
+    <list default="true" id="e799d7ac-36fd-43d1-9a9f-2045d3af6c6f" name="Changes" comment="update PublicUserProfile">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/data/repository/CompromissoRepository.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/data/repository/MedContRepository.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/google_icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.6/checksums/checksums.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.6/checksums/md5-checksums.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.6/checksums/sha1-checksums.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.6/dependencies-accessors/gc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.6/executionHistory/executionHistory.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.6/executionHistory/executionHistory.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.6/fileChanges/last-build.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.6/fileHashes/fileHashes.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.6/fileHashes/fileHashes.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.6/fileHashes/resourceHashesCache.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.6/gc.properties" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/app/PalmPet.app.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/other.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/other.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/MainActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/data/model/Medicamento.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/data/model/Pet.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/data/model/Pet.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/google-services.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/google-services.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/data/auth/AuthService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/data/auth/AuthService.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/data/repository/MedRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/data/repository/MedRepository.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/data/repository/UserRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/data/repository/UserRepository.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/components/CustomTextField.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/components/CustomTextField.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/AdicionarMedicacao.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/AdicionarMedicacao.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/AgendarCompromisso.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/AgendarCompromisso.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/Calendar.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/Calendar.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/Consultas.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/Consultas.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/EditEmail.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/EditEmail.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/EditPassword.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/EditPassword.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/EditPetProfile.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/EditPetProfile.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/EditProfile.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/EditProfile.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/Historico.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/Historico.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/Home.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/Home.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/Login.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/Login.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/Medicacoes.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/Medicacoes.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/Search.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/Search.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/viewmodel/UserViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/viewmodel/UserViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/PublicUserProfile.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/PublicUserProfile.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/TelaPet.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/screens/TelaPet.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/theme/Color.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/ui/theme/Color.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/viewmodel/MedViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/aliny/palmpet/viewmodel/MedViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,9 +107,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="valueResourceFile" />
-        <option value="Kotlin File" />
-        <option value="Kotlin Object" />
         <option value="Kotlin Class" />
+        <option value="Kotlin Object" />
+        <option value="Kotlin File" />
       </list>
     </option>
   </component>
@@ -150,6 +170,9 @@
     <key name="android.template.-1638110056">
       <recent name="com.aliny.palmpet.ui.screens" />
     </key>
+    <key name="android.template.-1151631020">
+      <recent name="com.aliny.palmpet.ui.screens" />
+    </key>
     <key name="android.template.1386721313">
       <recent name="com.aliny.palmpet" />
     </key>
@@ -173,11 +196,11 @@
       <recent name="com.aliny.palmpet.ui" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Workspace\PalmPet\app\src\main\res\drawable" />
       <recent name="D:\Workspace\PalmPet\app\src\main\java\com\aliny\palmpet\ui\screens" />
       <recent name="D:\AndroidStudioProjects\PalmPet\app\src\main\java\com\aliny\palmpet\ui\screens" />
       <recent name="D:\AndroidStudioProjects\PalmPet\app\src\main\java\com\aliny\palmpet" />
       <recent name="D:\AndroidStudioProjects\PalmPet\app\src\main\java\com\aliny\palmpet\ui" />
-      <recent name="D:\AndroidStudioProjects\PalmPet\app\src\main\java\com\aliny\palmpet\model" />
     </key>
     <key name="android.template.-2046024263">
       <recent name="com.aliny.palmpet.ui.screens" />
@@ -367,7 +390,23 @@
       <option name="project" value="LOCAL" />
       <updated>1734398033943</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="update PublicUserProfile">
+      <option name="closed" value="true" />
+      <created>1734476820879</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1734476820879</updated>
+    </task>
+    <task id="LOCAL-00005" summary="update PublicUserProfile">
+      <option name="closed" value="true" />
+      <created>1734477467626</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1734477467626</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -384,6 +423,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="update email and password" />
     <MESSAGE value="update pets" />
-    <option name="LAST_COMMIT_MESSAGE" value="update pets" />
+    <MESSAGE value="update PublicUserProfile" />
+    <option name="LAST_COMMIT_MESSAGE" value="update PublicUserProfile" />
   </component>
 </project>

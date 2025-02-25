@@ -50,11 +50,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import coil.compose.rememberImagePainter
+import coil.compose.rememberAsyncImagePainter
 import com.aliny.palmpet.data.repository.PetRepository
+import com.aliny.palmpet.ui.components.BackButton
 import com.aliny.palmpet.ui.components.CustomButton
 import com.aliny.palmpet.ui.components.CustomDatePicker
 import com.aliny.palmpet.ui.components.CustomTextField
+import com.aliny.palmpet.ui.theme.AzulFontes
 import com.aliny.palmpet.ui.theme.CinzaContainersClaro
 import com.aliny.palmpet.ui.theme.PalmPetTheme
 import com.aliny.palmpet.viewmodel.PetViewModel
@@ -95,12 +97,12 @@ fun EditPetProfileScreen(petViewModel: PetViewModel = viewModel()) {
     var nomeState by remember { mutableStateOf(TextFieldValue()) }
     var dataNascState by remember { mutableStateOf("") }
     var racaState by remember { mutableStateOf(TextFieldValue()) }
-    var castradoState = remember { mutableStateOf(false) }
+    val castradoState = remember { mutableStateOf(false) }
     var pesoState by remember { mutableStateOf(TextFieldValue()) }
     var corState by remember { mutableStateOf(TextFieldValue()) }
     var dataCioState by remember { mutableStateOf("") }
-    var jaCruzouState = remember { mutableStateOf(false) }
-    var teveFilhoteState = remember { mutableStateOf(false) }
+    val jaCruzouState = remember { mutableStateOf(false) }
+    val teveFilhoteState = remember { mutableStateOf(false) }
     var sexoState by remember { mutableStateOf("Selecione o sexo do animal") }
     var pelagemState by remember { mutableStateOf("Tamanho de pelagem") }
     var especieState by remember { mutableStateOf("Selecione a espécie") }
@@ -113,18 +115,18 @@ fun EditPetProfileScreen(petViewModel: PetViewModel = viewModel()) {
     //listas do DropDownMenus
     val especies = listOf("Cão", "Gato", "Ave", "Tartaruga", "Peixe", "Roedor")
     val sexo = listOf("Macho", "Fêmea")
-    var pelagem = listOf("Baixa", "Média", "Alta")
+    val pelagem = listOf("Baixa", "Média", "Alta")
 
     //estado para a URI da nova imagem selecionada
     var imageUri by remember { mutableStateOf<Uri?>(null) }
 
     LaunchedEffect(petData) {
         petData?.let { pet ->
-            nomeState = TextFieldValue(pet.nome ?: "")
-            racaState = TextFieldValue(pet.raca ?: "")
+            nomeState = TextFieldValue(pet.nome)
+            racaState = TextFieldValue(pet.raca)
 
-            // Conversão de Timestamp para formato legível
-            dataNascState = pet.data_nascimento?.let { timestamp ->
+            //conversão de timestamp para formato legível
+            dataNascState = pet.data_nascimento.let { timestamp ->
                 try {
                     val date = timestamp.toDate() //converte o timestamp para date
                     SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(date)
@@ -133,12 +135,12 @@ fun EditPetProfileScreen(petViewModel: PetViewModel = viewModel()) {
                 }
             } ?: ""
 
-            especieState = pet.especie ?: "Selecione a espécie"
-            sexoState = pet.sexo ?: "Selecione o sexo do animal"
-            castradoState.value = pet.castrado ?: false
+            especieState = pet.especie
+            sexoState = pet.sexo
+            castradoState.value = pet.castrado
             pesoState = TextFieldValue(pet.peso?.toString() ?: "")
-            corState = TextFieldValue(pet.cor ?: "")
-            pelagemState = pet.tipo_pelagem ?: "Tamanho de pelagem"
+            corState = TextFieldValue(pet.cor)
+            pelagemState = pet.tipo_pelagem
 
             dataCioState = pet.data_cio?.let { timestamp ->
                 try {
@@ -175,6 +177,13 @@ fun EditPetProfileScreen(petViewModel: PetViewModel = viewModel()) {
                 .padding(top = 55.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
+            BackButton(
+                onBackClick = { (context as? ComponentActivity)?.finish() },
+                iconColor = AzulFontes,
+                iconSize = 45
+            )
+
             Box(
                 modifier = Modifier
                     .size(200.dp)
@@ -184,10 +193,10 @@ fun EditPetProfileScreen(petViewModel: PetViewModel = viewModel()) {
             ) {
                 //mostra a nova imagem selecionada
                 val painter = if (imageUri != null) {
-                    rememberImagePainter(data = imageUri)
+                    rememberAsyncImagePainter(model = imageUri)
                 } else {
                     //mostra imagem anterior do pet
-                    rememberImagePainter(data = petData?.imageUrl)
+                    rememberAsyncImagePainter(model = petData?.imageUrl)
                 }
 
                 Image(
