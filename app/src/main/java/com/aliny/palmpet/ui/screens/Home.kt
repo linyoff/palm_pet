@@ -30,7 +30,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
-import coil.compose.rememberImagePainter
 import com.aliny.palmpet.R
 import com.aliny.palmpet.data.model.Pet
 import com.aliny.palmpet.ui.components.ActionButton
@@ -183,7 +182,7 @@ fun PetItem(pet: Pet) {
                 },
             contentAlignment = Alignment.Center
         ) {
-            if (imageUrl != null && imageUrl.isNotEmpty()) {
+            if (!imageUrl.isNullOrEmpty()) {
                 val painter: Painter = rememberAsyncImagePainter(model = imageUrl)
                 Image(
                     painter = painter,

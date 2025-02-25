@@ -31,7 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import coil.compose.rememberImagePainter
+import coil.compose.rememberAsyncImagePainter
 import com.aliny.palmpet.data.repository.UserRepository
 import com.aliny.palmpet.ui.components.BackButton
 import com.aliny.palmpet.ui.components.CustomButton
@@ -81,15 +81,15 @@ fun EditProfile(userViewModel: UserViewModel = viewModel()) {
     //atualiza os campos de entrada quando userData mudar
     LaunchedEffect(userData) {
         userData?.let { user ->
-            nome = TextFieldValue(user.nome ?: "")
-            nomeUsuario = TextFieldValue(user.nome_usuario ?: "")
+            nome = TextFieldValue(user.nome)
+            nomeUsuario = TextFieldValue(user.nome_usuario)
             dataNascimento = TextFieldValue(
-                user.data_nascimento?.toDate()?.let {
+                user.data_nascimento.toDate().let {
                     SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(it)
                 } ?: ""
             )
-            telefone = TextFieldValue(user.telefone ?: "")
-            email = TextFieldValue(user.email ?: "")
+            telefone = TextFieldValue(user.telefone)
+            email = TextFieldValue(user.email)
         }
     }
 
@@ -133,10 +133,10 @@ fun EditProfile(userViewModel: UserViewModel = viewModel()) {
             ) {
                 //mostra nova imagem selecionada
                 val painter = if (imageUri != null) {
-                    rememberImagePainter(data = imageUri)
+                    rememberAsyncImagePainter(model = imageUri)
                 } else {
                     //mostra imagem anterior do usuário
-                    rememberImagePainter(data = userData?.imageUrl)
+                    rememberAsyncImagePainter(model = userData?.imageUrl)
                 }
 
                 Image(

@@ -289,7 +289,7 @@ fun InfoCard(label: String, value: String) {
 }
 
 @Composable
-fun BotoesDeAcaoPet(pet_id : String) {
+fun BotoesDeAcaoPet(petId : String) {
 
     val context = LocalContext.current
 
@@ -305,7 +305,7 @@ fun BotoesDeAcaoPet(pet_id : String) {
             iconResId = R.drawable.icon_medicacoes,
             onClick = {
                 val intent = Intent(context, Medicacoes::class.java).apply {
-                    putExtra("pet_id", pet_id)
+                    putExtra("pet_id", petId)
                 }
                 context.startActivity(intent)
             },

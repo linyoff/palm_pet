@@ -129,6 +129,7 @@ fun TeladeCadastro() {
             label = "Data de nascimento",
             selectedDate = dataNascState,
             onDateSelected = { dataNascState = it.text },
+            isFutureAllowed = false,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
         )

@@ -15,13 +15,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Icon
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Surface
@@ -163,6 +159,7 @@ fun AddMedicacoesScreen(petViewModel: PetViewModel = viewModel()) {
             label = "Data",
             selectedDate = dataState,
             onDateSelected = { dataState = it.text },
+            isFutureAllowed = false,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
         )
@@ -171,6 +168,7 @@ fun AddMedicacoesScreen(petViewModel: PetViewModel = viewModel()) {
             label = "Data de reforço",
             selectedDate = doseReforcoState,
             onDateSelected = { doseReforcoState = it.text },
+            isFutureAllowed = true,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
         )

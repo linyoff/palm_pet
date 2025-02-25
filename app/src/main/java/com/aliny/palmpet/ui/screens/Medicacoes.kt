@@ -21,7 +21,6 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Medication
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -142,7 +141,7 @@ fun MedicacoesScreen(
 @Composable
 fun MedicacaoItem(medicacao: Medicacao) {
 
-    var context = LocalContext.current
+    val context = LocalContext.current
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -177,7 +176,7 @@ fun MedicacaoItem(medicacao: Medicacao) {
             val formattedDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(date) // formata a data
 
             Text(
-                text = "Data: ${formattedDate}",
+                text = "Data: $formattedDate",
                 fontSize = 14.sp,
                 color = AzulFontes
             )

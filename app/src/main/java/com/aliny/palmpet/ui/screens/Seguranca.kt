@@ -42,7 +42,7 @@ class Seguranca : ComponentActivity() {
                             context.startActivity(intent)
                         },
                         onDesativarContaClick = {
-                            // Chamar navegação para a tela de desativar conta
+                            //chamar navegação para a tela de desativar conta
                         }
                     )
                 }

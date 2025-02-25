@@ -81,7 +81,7 @@ class MainActivity : ComponentActivity() {
                         ModalNavigationDrawer(
                             drawerState = drawerState,
                             drawerContent = {
-                                DrawerContent(navController, { scope.launch { drawerState.close() } })
+                                DrawerContent(navController) { scope.launch { drawerState.close() } }
                             }
                         ) {
                             Scaffold(
@@ -277,10 +277,10 @@ fun NavigationHost(navController: NavHostController, userViewModel: UserViewMode
 }
 
 sealed class Screen(val route: String, val icon: ImageVector) {
-    object Home : Screen("Home", Icons.Outlined.Home)
-    object Calendar : Screen("Calendar", Icons.Outlined.DateRange)
-    object Notifications : Screen("Notifications", Icons.Outlined.Notifications)
-    object Search : Screen("Search", Icons.Outlined.Search)
+    data object Home : Screen("Home", Icons.Outlined.Home)
+    data object Calendar : Screen("Calendar", Icons.Outlined.DateRange)
+    data object Notifications : Screen("Notifications", Icons.Outlined.Notifications)
+    data object Search : Screen("Search", Icons.Outlined.Search)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -300,7 +300,7 @@ fun TelaPreview() {
             ModalNavigationDrawer(
                 drawerState = drawerState,
                 drawerContent = {
-                    DrawerContent(navController, { scope.launch { drawerState.close() } })
+                    DrawerContent(navController) { scope.launch { drawerState.close() } }
                 }
             ) {
                 Scaffold(

@@ -26,7 +26,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberImagePainter
+import coil.compose.rememberAsyncImagePainter
 
 @Composable
 fun ImagePicker(
@@ -66,7 +66,7 @@ fun ImagePicker(
         ) {
             imageUri?.let {
                 Image(
-                    painter = rememberImagePainter(it),
+                    painter = rememberAsyncImagePainter(it),
                     contentDescription = "Foto",
                     contentScale = ContentScale.Crop, // Faz a imagem preencher a área de forma recortada
                     modifier = Modifier

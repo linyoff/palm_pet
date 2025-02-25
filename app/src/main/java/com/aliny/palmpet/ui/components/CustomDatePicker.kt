@@ -4,7 +4,6 @@ import android.app.DatePickerDialog
 import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -18,7 +17,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aliny.palmpet.ui.theme.CinzaContainersClaro
-import com.aliny.palmpet.ui.theme.CinzaContainersEscuro
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -28,6 +26,7 @@ fun CustomDatePicker(
     label: String,
     selectedDate: String,
     modifier: Modifier = Modifier,
+    isFutureAllowed: Boolean,
     onDateSelected: (TextFieldValue) -> Unit
 ) {
     val context = LocalContext.current
@@ -41,6 +40,7 @@ fun CustomDatePicker(
         year,
         month,
         day,
+        isFutureAllowed,
         onDateSelected
     )
 
@@ -52,7 +52,7 @@ fun CustomDatePicker(
     ) {
         Text(
             //preenche com o texto do label ou com a data selecionada
-            text = if (selectedDate.isEmpty()) label else selectedDate,
+            text = selectedDate.ifEmpty { label },
             fontSize = 13.sp,
             modifier = modifier
                 .background(CinzaContainersClaro, RoundedCornerShape(15.dp))
@@ -70,6 +70,7 @@ fun createStyledDatePickerDialog(
     year: Int,
     month: Int,
     day: Int,
+    isFutureAllowed: Boolean,
     onDateSelected: (TextFieldValue) -> Unit
 ): DatePickerDialog {
     val themeResId = context.resources.getIdentifier("CustomDatePickerDialogTheme", "style", context.packageName)
@@ -92,9 +93,12 @@ fun createStyledDatePickerDialog(
     val minDate = Calendar.getInstance().apply {
         set(year - 100, month, day) //até 100 anos atras
     }
-    val maxDate = Calendar.getInstance() //data atual
+    //verificando se permite data futura
+    if (!isFutureAllowed) {
+        val maxDate = Calendar.getInstance() //data atual
+        datePickerDialog.datePicker.maxDate = maxDate.timeInMillis
+    }
 
-    datePickerDialog.datePicker.maxDate = maxDate.timeInMillis
     datePickerDialog.datePicker.minDate = minDate.timeInMillis
 
     return datePickerDialog

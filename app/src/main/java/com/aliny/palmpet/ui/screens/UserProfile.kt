@@ -28,7 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import coil.compose.rememberImagePainter
+import coil.compose.rememberAsyncImagePainter
 import com.aliny.palmpet.ui.theme.AzulFontes
 import com.aliny.palmpet.ui.theme.CinzaContainersClaro
 import com.aliny.palmpet.ui.theme.PalmPetTheme
@@ -79,7 +79,7 @@ fun UserProfile(){
                 userData?.let { user ->
                     if (!user.imageUrl.isNullOrEmpty()) {
                         //imagem do usuário
-                        val painter = rememberImagePainter(data = user.imageUrl)
+                        val painter = rememberAsyncImagePainter(model = user.imageUrl)
                         Image(
                             painter = painter,
                             contentDescription = "Foto do usuário",

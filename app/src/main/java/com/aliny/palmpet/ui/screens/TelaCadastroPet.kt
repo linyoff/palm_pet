@@ -82,12 +82,12 @@ fun TeladeCadastroPet(userViewModel: UserViewModel) {
     var nomeState by remember { mutableStateOf(TextFieldValue()) }
     var dataNascState by remember { mutableStateOf(TextFieldValue()) }
     var racaState by remember { mutableStateOf(TextFieldValue()) }
-    var castradoState = remember { mutableStateOf(false) }
+    val castradoState = remember { mutableStateOf(false) }
     var pesoState by remember { mutableStateOf(TextFieldValue()) }
     var corState by remember { mutableStateOf(TextFieldValue()) }
     var dataCioState by remember { mutableStateOf("") }
-    var jaCruzouState = remember { mutableStateOf(false) }
-    var teveFilhoteState = remember { mutableStateOf(false) }
+    val jaCruzouState = remember { mutableStateOf(false) }
+    val teveFilhoteState = remember { mutableStateOf(false) }
     var sexoState by remember { mutableStateOf("Selecione o sexo do animal") }
     var pelagemState by remember { mutableStateOf("Tamanho de pelagem") }
     var especieState by remember { mutableStateOf("Selecione a espécie") }
@@ -100,7 +100,7 @@ fun TeladeCadastroPet(userViewModel: UserViewModel) {
     //lista com as opções dos DropDownMenus
     val especies = listOf("Cão", "Gato", "Ave", "Tartaruga", "Peixe", "Roedor")
     val sexo = listOf("Macho", "Fêmea")
-    var pelagem = listOf("Baixa", "Média", "Alta")
+    val pelagem = listOf("Baixa", "Média", "Alta")
 
     Column (
         modifier = Modifier
@@ -135,6 +135,7 @@ fun TeladeCadastroPet(userViewModel: UserViewModel) {
             label = "Data de nascimento",
             selectedDate = dataNascState.text,
             onDateSelected = { dataNascState = it },
+            isFutureAllowed = false,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
         )
@@ -300,6 +301,7 @@ fun TeladeCadastroPet(userViewModel: UserViewModel) {
                     label = "Data de último cio",
                     selectedDate = dataCioState,
                     onDateSelected = { dataCioState = it.text },
+                    isFutureAllowed = false,
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)
                 )

@@ -138,7 +138,7 @@ fun EditPetProfileScreen(petViewModel: PetViewModel = viewModel()) {
             especieState = pet.especie
             sexoState = pet.sexo
             castradoState.value = pet.castrado
-            pesoState = TextFieldValue(pet.peso?.toString() ?: "")
+            pesoState = TextFieldValue(pet.peso.toString())
             corState = TextFieldValue(pet.cor)
             pelagemState = pet.tipo_pelagem
 
@@ -235,6 +235,7 @@ fun EditPetProfileScreen(petViewModel: PetViewModel = viewModel()) {
             label = dataNascState,
             selectedDate = dataNascState,
             onDateSelected = { dataNascState = it.text },
+            isFutureAllowed = false,
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
 
@@ -393,6 +394,7 @@ fun EditPetProfileScreen(petViewModel: PetViewModel = viewModel()) {
                     label = "Data de último cio",
                     selectedDate = dataCioState,
                     onDateSelected = { dataCioState = it.text },
+                    isFutureAllowed = false,
                     modifier = Modifier.align(Alignment.CenterHorizontally)
                 )
             }
